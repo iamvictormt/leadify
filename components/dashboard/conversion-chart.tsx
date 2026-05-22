@@ -1,38 +1,43 @@
 "use client"
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
 
-const data = [
-  { name: "WhatsApp", value: 45, color: "#CCE2C8" },
-  { name: "Instagram", value: 25, color: "#303030" },
-  { name: "Site", value: 20, color: "#8E8F8E" },
-  { name: "Outros", value: 10, color: "#D8D8D8" },
-]
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export function ConversionChart() {
-  const total = data.reduce((acc, item) => acc + item.value, 0)
+const colors = ["#CCE2C8", "#303030", "#8E8F8E", "#D8D8D8"]
+
+type ConversionChartProps = {
+  data: Array<{
+    name: string
+    value: number
+  }>
+}
+
+export function ConversionChart({ data }: ConversionChartProps) {
+  const chartData = data.map((item, index) => ({
+    ...item,
+    color: colors[index] ?? "#D8D8D8",
+  }))
+  const total = chartData.reduce((acc, item) => acc + item.value, 0)
+  const displayData = total > 0 ? chartData : [
+    { name: "WhatsApp", value: 0, color: colors[0] },
+    { name: "Instagram", value: 0, color: colors[1] },
+    { name: "Site", value: 0, color: colors[2] },
+    { name: "Manual", value: 0, color: colors[3] },
+  ]
 
   return (
     <Card className="border-0 shadow-sm">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-semibold">Origem dos Leads</CardTitle>
+        <CardTitle className="text-lg font-semibold">Origens</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-8">
           <div className="relative h-[180px] w-[180px]">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie
-                  data={data}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
-                  paddingAngle={2}
-                  dataKey="value"
-                >
-                  {data.map((entry, index) => (
+                <Pie data={displayData} cx="50%" cy="50%" innerRadius={50} outerRadius={80} paddingAngle={2} dataKey="value">
+                  {displayData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
                 </Pie>
@@ -52,16 +57,13 @@ export function ConversionChart() {
             </div>
           </div>
           <div className="flex-1 space-y-3">
-            {data.map((item) => (
+            {displayData.map((item) => (
               <div key={item.name} className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div
-                    className="h-3 w-3 rounded-full"
-                    style={{ backgroundColor: item.color }}
-                  />
+                  <div className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
                   <span className="text-sm">{item.name}</span>
                 </div>
-                <span className="text-sm font-medium">{item.value}%</span>
+                <span className="text-sm font-medium">{item.value}</span>
               </div>
             ))}
           </div>

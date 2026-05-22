@@ -1,51 +1,51 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { TrendingUp, TrendingDown, Users, UserCheck, Clock, Target } from "lucide-react"
+import { Clock, Target, TrendingUp, UserCheck, Users } from "lucide-react"
 
-const stats = [
-  {
-    title: "Leads Hoje",
-    value: "24",
-    change: "+12%",
-    trend: "up",
-    icon: Users,
-    bgColor: "bg-primary",
-  },
-  {
-    title: "Leads da Semana",
-    value: "156",
-    change: "+8.2%",
-    trend: "up",
-    icon: Target,
-    bgColor: "bg-[#EEFF41]",
-  },
-  {
-    title: "Em Aberto",
-    value: "43",
-    change: "-3%",
-    trend: "down",
-    icon: Clock,
-    bgColor: "bg-card",
-  },
-  {
-    title: "Fechados",
-    value: "89",
-    change: "+15%",
-    trend: "up",
-    icon: UserCheck,
-    bgColor: "bg-card",
-  },
-]
+type StatsCardsProps = {
+  conversion: number
+  pending: number
+  todayLeads: number
+  weekLeads: number
+}
 
-export function StatsCards() {
+export function StatsCards({ conversion, pending, todayLeads, weekLeads }: StatsCardsProps) {
+  const stats = [
+    {
+      title: "Leads hoje",
+      value: todayLeads.toString(),
+      helper: "Novos contatos recebidos hoje",
+      icon: Users,
+      bgColor: "bg-card",
+    },
+    {
+      title: "Leads semana",
+      value: weekLeads.toString(),
+      helper: "Total dos últimos 7 dias",
+      icon: Target,
+      bgColor: "bg-card",
+    },
+    {
+      title: "Conversão",
+      value: `${conversion}%`,
+      helper: "Leads com status de fechamento",
+      icon: UserCheck,
+      bgColor: "bg-card",
+    },
+    {
+      title: "Pendentes",
+      value: pending.toString(),
+      helper: "Leads ainda não convertidos",
+      icon: Clock,
+      bgColor: "bg-card",
+    },
+  ]
+
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {stats.map((stat) => (
-        <Card
-          key={stat.title}
-          className={`${stat.bgColor} border-0 shadow-sm`}
-        >
+        <Card key={stat.title} className={`${stat.bgColor} border-0 shadow-sm`}>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -56,16 +56,9 @@ export function StatsCards() {
                 <stat.icon className="h-6 w-6" />
               </div>
             </div>
-            <div className="mt-4 flex items-center gap-1 text-sm">
-              {stat.trend === "up" ? (
-                <TrendingUp className="h-4 w-4 text-green-600" />
-              ) : (
-                <TrendingDown className="h-4 w-4 text-red-500" />
-              )}
-              <span className={stat.trend === "up" ? "text-green-600" : "text-red-500"}>
-                {stat.change}
-              </span>
-              <span className="text-muted-foreground">vs semana passada</span>
+            <div className="mt-4 flex items-center gap-1 text-sm text-muted-foreground">
+              <TrendingUp className="h-4 w-4 text-green-600" />
+              <span>{stat.helper}</span>
             </div>
           </CardContent>
         </Card>
