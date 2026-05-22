@@ -67,3 +67,8 @@ export type Subscription = Prisma.SubscriptionModel
  * 
  */
 export type LeadHistory = Prisma.LeadHistoryModel
+/**
+ * Model AiLog
+ * 
+ */
+export type AiLog = Prisma.AiLogModel

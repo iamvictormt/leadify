@@ -212,6 +212,7 @@ export type CompanyWhereInput = {
   conversations?: Prisma.ConversationListRelationFilter
   knowledgeBase?: Prisma.KnowledgeBaseListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  aiLogs?: Prisma.AiLogListRelationFilter
 }
 
 export type CompanyOrderByWithRelationInput = {
@@ -229,6 +230,7 @@ export type CompanyOrderByWithRelationInput = {
   conversations?: Prisma.ConversationOrderByRelationAggregateInput
   knowledgeBase?: Prisma.KnowledgeBaseOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
+  aiLogs?: Prisma.AiLogOrderByRelationAggregateInput
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -249,6 +251,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   conversations?: Prisma.ConversationListRelationFilter
   knowledgeBase?: Prisma.KnowledgeBaseListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
+  aiLogs?: Prisma.AiLogListRelationFilter
 }, "id">
 
 export type CompanyOrderByWithAggregationInput = {
@@ -294,6 +297,7 @@ export type CompanyCreateInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateInput = {
@@ -311,6 +315,7 @@ export type CompanyUncheckedCreateInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUpdateInput = {
@@ -328,6 +333,7 @@ export type CompanyUpdateInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateInput = {
@@ -345,6 +351,7 @@ export type CompanyUncheckedUpdateInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateManyInput = {
@@ -514,6 +521,20 @@ export type CompanyUpdateOneRequiredWithoutSubscriptionsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutSubscriptionsInput, Prisma.CompanyUpdateWithoutSubscriptionsInput>, Prisma.CompanyUncheckedUpdateWithoutSubscriptionsInput>
 }
 
+export type CompanyCreateNestedOneWithoutAiLogsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutAiLogsInput, Prisma.CompanyUncheckedCreateWithoutAiLogsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutAiLogsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutAiLogsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutAiLogsInput, Prisma.CompanyUncheckedCreateWithoutAiLogsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutAiLogsInput
+  upsert?: Prisma.CompanyUpsertWithoutAiLogsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutAiLogsInput, Prisma.CompanyUpdateWithoutAiLogsInput>, Prisma.CompanyUncheckedUpdateWithoutAiLogsInput>
+}
+
 export type CompanyCreateWithoutUsersInput = {
   id?: string
   name: string
@@ -528,6 +549,7 @@ export type CompanyCreateWithoutUsersInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutUsersInput = {
@@ -544,6 +566,7 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutUsersInput = {
@@ -576,6 +599,7 @@ export type CompanyUpdateWithoutUsersInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutUsersInput = {
@@ -592,6 +616,7 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutStatusesInput = {
@@ -608,6 +633,7 @@ export type CompanyCreateWithoutStatusesInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutStatusesInput = {
@@ -624,6 +650,7 @@ export type CompanyUncheckedCreateWithoutStatusesInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutStatusesInput = {
@@ -656,6 +683,7 @@ export type CompanyUpdateWithoutStatusesInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutStatusesInput = {
@@ -672,6 +700,7 @@ export type CompanyUncheckedUpdateWithoutStatusesInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutLeadsInput = {
@@ -688,6 +717,7 @@ export type CompanyCreateWithoutLeadsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutLeadsInput = {
@@ -704,6 +734,7 @@ export type CompanyUncheckedCreateWithoutLeadsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutLeadsInput = {
@@ -736,6 +767,7 @@ export type CompanyUpdateWithoutLeadsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutLeadsInput = {
@@ -752,6 +784,7 @@ export type CompanyUncheckedUpdateWithoutLeadsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutConversationsInput = {
@@ -768,6 +801,7 @@ export type CompanyCreateWithoutConversationsInput = {
   statuses?: Prisma.LeadStatusCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutConversationsInput = {
@@ -784,6 +818,7 @@ export type CompanyUncheckedCreateWithoutConversationsInput = {
   statuses?: Prisma.LeadStatusUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutConversationsInput = {
@@ -816,6 +851,7 @@ export type CompanyUpdateWithoutConversationsInput = {
   statuses?: Prisma.LeadStatusUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutConversationsInput = {
@@ -832,6 +868,7 @@ export type CompanyUncheckedUpdateWithoutConversationsInput = {
   statuses?: Prisma.LeadStatusUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutKnowledgeBaseInput = {
@@ -848,6 +885,7 @@ export type CompanyCreateWithoutKnowledgeBaseInput = {
   statuses?: Prisma.LeadStatusCreateNestedManyWithoutCompanyInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutKnowledgeBaseInput = {
@@ -864,6 +902,7 @@ export type CompanyUncheckedCreateWithoutKnowledgeBaseInput = {
   statuses?: Prisma.LeadStatusUncheckedCreateNestedManyWithoutCompanyInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutKnowledgeBaseInput = {
@@ -896,6 +935,7 @@ export type CompanyUpdateWithoutKnowledgeBaseInput = {
   statuses?: Prisma.LeadStatusUpdateManyWithoutCompanyNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutKnowledgeBaseInput = {
@@ -912,6 +952,7 @@ export type CompanyUncheckedUpdateWithoutKnowledgeBaseInput = {
   statuses?: Prisma.LeadStatusUncheckedUpdateManyWithoutCompanyNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutSubscriptionsInput = {
@@ -928,6 +969,7 @@ export type CompanyCreateWithoutSubscriptionsInput = {
   statuses?: Prisma.LeadStatusCreateNestedManyWithoutCompanyInput
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutSubscriptionsInput = {
@@ -944,6 +986,7 @@ export type CompanyUncheckedCreateWithoutSubscriptionsInput = {
   statuses?: Prisma.LeadStatusUncheckedCreateNestedManyWithoutCompanyInput
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutSubscriptionsInput = {
@@ -976,6 +1019,7 @@ export type CompanyUpdateWithoutSubscriptionsInput = {
   statuses?: Prisma.LeadStatusUpdateManyWithoutCompanyNestedInput
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutSubscriptionsInput = {
@@ -992,6 +1036,91 @@ export type CompanyUncheckedUpdateWithoutSubscriptionsInput = {
   statuses?: Prisma.LeadStatusUncheckedUpdateManyWithoutCompanyNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutAiLogsInput = {
+  id?: string
+  name: string
+  segment: string
+  phone?: string | null
+  email?: string | null
+  document?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  statuses?: Prisma.LeadStatusCreateNestedManyWithoutCompanyInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
+  knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutAiLogsInput = {
+  id?: string
+  name: string
+  segment: string
+  phone?: string | null
+  email?: string | null
+  document?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  statuses?: Prisma.LeadStatusUncheckedCreateNestedManyWithoutCompanyInput
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
+  knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutAiLogsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutAiLogsInput, Prisma.CompanyUncheckedCreateWithoutAiLogsInput>
+}
+
+export type CompanyUpsertWithoutAiLogsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutAiLogsInput, Prisma.CompanyUncheckedUpdateWithoutAiLogsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutAiLogsInput, Prisma.CompanyUncheckedCreateWithoutAiLogsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutAiLogsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutAiLogsInput, Prisma.CompanyUncheckedUpdateWithoutAiLogsInput>
+}
+
+export type CompanyUpdateWithoutAiLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  segment?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  statuses?: Prisma.LeadStatusUpdateManyWithoutCompanyNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
+  knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutAiLogsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  segment?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  statuses?: Prisma.LeadStatusUncheckedUpdateManyWithoutCompanyNestedInput
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
+  knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -1006,6 +1135,7 @@ export type CompanyCountOutputType = {
   conversations: number
   knowledgeBase: number
   subscriptions: number
+  aiLogs: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1015,6 +1145,7 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   conversations?: boolean | CompanyCountOutputTypeCountConversationsArgs
   knowledgeBase?: boolean | CompanyCountOutputTypeCountKnowledgeBaseArgs
   subscriptions?: boolean | CompanyCountOutputTypeCountSubscriptionsArgs
+  aiLogs?: boolean | CompanyCountOutputTypeCountAiLogsArgs
 }
 
 /**
@@ -1069,6 +1200,13 @@ export type CompanyCountOutputTypeCountSubscriptionsArgs<ExtArgs extends runtime
   where?: Prisma.SubscriptionWhereInput
 }
 
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountAiLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiLogWhereInput
+}
+
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1085,6 +1223,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   conversations?: boolean | Prisma.Company$conversationsArgs<ExtArgs>
   knowledgeBase?: boolean | Prisma.Company$knowledgeBaseArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Company$subscriptionsArgs<ExtArgs>
+  aiLogs?: boolean | Prisma.Company$aiLogsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
@@ -1129,6 +1268,7 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   conversations?: boolean | Prisma.Company$conversationsArgs<ExtArgs>
   knowledgeBase?: boolean | Prisma.Company$knowledgeBaseArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Company$subscriptionsArgs<ExtArgs>
+  aiLogs?: boolean | Prisma.Company$aiLogsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1143,6 +1283,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     conversations: Prisma.$ConversationPayload<ExtArgs>[]
     knowledgeBase: Prisma.$KnowledgeBasePayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
+    aiLogs: Prisma.$AiLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1553,6 +1694,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   conversations<T extends Prisma.Company$conversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   knowledgeBase<T extends Prisma.Company$knowledgeBaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$knowledgeBaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KnowledgeBasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.Company$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiLogs<T extends Prisma.Company$aiLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$aiLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2124,6 +2266,30 @@ export type Company$subscriptionsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.SubscriptionScalarFieldEnum | Prisma.SubscriptionScalarFieldEnum[]
+}
+
+/**
+ * Company.aiLogs
+ */
+export type Company$aiLogsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiLog
+   */
+  select?: Prisma.AiLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiLog
+   */
+  omit?: Prisma.AiLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiLogInclude<ExtArgs> | null
+  where?: Prisma.AiLogWhereInput
+  orderBy?: Prisma.AiLogOrderByWithRelationInput | Prisma.AiLogOrderByWithRelationInput[]
+  cursor?: Prisma.AiLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiLogScalarFieldEnum | Prisma.AiLogScalarFieldEnum[]
 }
 
 /**

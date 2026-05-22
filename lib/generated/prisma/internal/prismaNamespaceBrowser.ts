@@ -60,7 +60,8 @@ export const ModelName = {
   KnowledgeBase: 'KnowledgeBase',
   Plan: 'Plan',
   Subscription: 'Subscription',
-  LeadHistory: 'LeadHistory'
+  LeadHistory: 'LeadHistory',
+  AiLog: 'AiLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -213,6 +214,18 @@ export const LeadHistoryScalarFieldEnum = {
 } as const
 
 export type LeadHistoryScalarFieldEnum = (typeof LeadHistoryScalarFieldEnum)[keyof typeof LeadHistoryScalarFieldEnum]
+
+
+export const AiLogScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  messageId: 'messageId',
+  tokens: 'tokens',
+  model: 'model',
+  createdAt: 'createdAt'
+} as const
+
+export type AiLogScalarFieldEnum = (typeof AiLogScalarFieldEnum)[keyof typeof AiLogScalarFieldEnum]
 
 
 export const SortOrder = {

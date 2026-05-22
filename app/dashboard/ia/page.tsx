@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { Bot, Brain, Check, Copy, Pencil, Plus, Send, Sparkles, Trash2, User } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -73,39 +73,49 @@ export default function IAPage() {
     loadKnowledgeBase()
   }, [])
 
-  const contextPreview = useMemo(() => {
-    const services = knowledgeBase.filter((item) => item.type === "SERVICE")
-    const hours = knowledgeBase.filter((item) => item.type === "BUSINESS_HOURS")
-    const faqs = knowledgeBase.filter((item) => item.type === "FAQ")
+  const generateResponse = async () => {
+    const lastCustomerMessage = [...messages].reverse().find((m) => m.role === "customer")
 
-    return { services, hours, faqs }
-  }, [knowledgeBase])
+    if (!lastCustomerMessage) return
 
-  const generateResponse = () => {
     setIsGenerating(true)
+    setError("")
 
-    window.setTimeout(() => {
-      const firstService = contextPreview.services[0]
-      const firstHours = contextPreview.hours[0]
-      const firstFaq = contextPreview.faqs[0]
-      const details = [
-        firstService ? `${firstService.title} custa ${firstService.content}` : null,
-        firstHours ? `atendemos ${firstHours.title.toLowerCase()} das ${firstHours.content}` : null,
-        firstFaq ? `${firstFaq.title} ${firstFaq.content}` : null,
-      ].filter(Boolean)
+    try {
+      const response = await fetch("/api/ai/suggest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: lastCustomerMessage.content,
+          leadName: "Maria Santos",
+        }),
+      })
+
+      if (response.status === 401) {
+        window.location.href = "/login"
+        return
+      }
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        setError(data.error ?? "Erro ao gerar sugestão da IA.")
+        return
+      }
 
       const aiResponse: Message = {
         id: crypto.randomUUID(),
         role: "assistant",
-        content: details.length
-          ? `Olá! ${details.join(". ")}. Posso te ajudar a agendar ou passar mais detalhes?`
-          : "Olá! Ainda preciso que você cadastre serviços, horários e FAQ para gerar respostas mais precisas.",
+        content: data.suggestion,
         timestamp: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
       }
 
       setMessages((current) => [...current, aiResponse])
+    } catch {
+      setError("Não foi possível conectar ao serviço de IA.")
+    } finally {
       setIsGenerating(false)
-    }, 900)
+    }
   }
 
   const handleSend = () => {

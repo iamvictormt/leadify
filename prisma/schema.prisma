@@ -20,6 +20,7 @@ model Company {
   conversations Conversation[]
   knowledgeBase KnowledgeBase[]
   subscriptions Subscription[]
+  aiLogs        AiLog[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
 }
@@ -143,4 +144,16 @@ model LeadHistory {
   createdAt DateTime @default(now())
 
   @@index([leadId])
+}
+
+model AiLog {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  messageId String?
+  tokens    Int
+  model     String
+  createdAt DateTime @default(now())
+
+  @@index([companyId])
 }

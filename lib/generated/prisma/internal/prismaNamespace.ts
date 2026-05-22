@@ -393,7 +393,8 @@ export const ModelName = {
   KnowledgeBase: 'KnowledgeBase',
   Plan: 'Plan',
   Subscription: 'Subscription',
-  LeadHistory: 'LeadHistory'
+  LeadHistory: 'LeadHistory',
+  AiLog: 'AiLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "leadStatus" | "lead" | "conversation" | "message" | "knowledgeBase" | "plan" | "subscription" | "leadHistory"
+    modelProps: "company" | "user" | "leadStatus" | "lead" | "conversation" | "message" | "knowledgeBase" | "plan" | "subscription" | "leadHistory" | "aiLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1153,6 +1154,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AiLog: {
+      payload: Prisma.$AiLogPayload<ExtArgs>
+      fields: Prisma.AiLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AiLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AiLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>
+        }
+        findFirst: {
+          args: Prisma.AiLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AiLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>
+        }
+        findMany: {
+          args: Prisma.AiLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>[]
+        }
+        create: {
+          args: Prisma.AiLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>
+        }
+        createMany: {
+          args: Prisma.AiLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AiLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>[]
+        }
+        delete: {
+          args: Prisma.AiLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>
+        }
+        update: {
+          args: Prisma.AiLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.AiLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AiLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AiLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.AiLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AiLogPayload>
+        }
+        aggregate: {
+          args: Prisma.AiLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAiLog>
+        }
+        groupBy: {
+          args: Prisma.AiLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AiLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AiLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AiLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1326,6 +1401,18 @@ export const LeadHistoryScalarFieldEnum = {
 } as const
 
 export type LeadHistoryScalarFieldEnum = (typeof LeadHistoryScalarFieldEnum)[keyof typeof LeadHistoryScalarFieldEnum]
+
+
+export const AiLogScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  messageId: 'messageId',
+  tokens: 'tokens',
+  model: 'model',
+  createdAt: 'createdAt'
+} as const
+
+export type AiLogScalarFieldEnum = (typeof AiLogScalarFieldEnum)[keyof typeof AiLogScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1540,6 +1627,7 @@ export type GlobalOmitConfig = {
   plan?: Prisma.PlanOmit
   subscription?: Prisma.SubscriptionOmit
   leadHistory?: Prisma.LeadHistoryOmit
+  aiLog?: Prisma.AiLogOmit
 }
 
 /* Types for Logging */
