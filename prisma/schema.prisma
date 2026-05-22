@@ -8,21 +8,22 @@ datasource db {
 }
 
 model Company {
-  id            String          @id @default(uuid())
-  name          String
-  segment       String
-  phone         String?
-  email         String?
-  document      String?
-  users         User[]
-  leads         Lead[]
-  statuses      LeadStatus[]
-  conversations Conversation[]
-  knowledgeBase KnowledgeBase[]
-  subscriptions Subscription[]
-  aiLogs        AiLog[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id             String          @id @default(uuid())
+  name           String
+  segment        String
+  phone          String?
+  email          String?
+  document       String?
+  users          User[]
+  leads          Lead[]
+  statuses       LeadStatus[]
+  conversations  Conversation[]
+  knowledgeBase  KnowledgeBase[]
+  subscriptions  Subscription[]
+  aiLogs         AiLog[]
+  whatsappConfig WhatsAppConfig?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 }
 
 model User {
@@ -91,8 +92,12 @@ model Message {
   senderType     String
   content        String
   aiGenerated    Boolean      @default(false)
+  whatsappMsgId  String?
+  status         String       @default("sent")
   sentAt         DateTime?
   createdAt      DateTime     @default(now())
+
+  @@index([whatsappMsgId])
 }
 
 model KnowledgeBase {
@@ -156,4 +161,27 @@ model AiLog {
   createdAt DateTime @default(now())
 
   @@index([companyId])
+}
+
+model WhatsAppConfig {
+  id            String   @id @default(uuid())
+  companyId     String   @unique
+  company       Company  @relation(fields: [companyId], references: [id])
+  wabaId        String   @unique
+  phoneNumberId String
+  accessToken   String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([wabaId])
+}
+
+model WhatsAppMessageDedup {
+  id            String   @id @default(uuid())
+  whatsappMsgId String   @unique
+  companyId     String
+  receivedAt    DateTime @default(now())
+
+  @@index([whatsappMsgId])
+  @@index([receivedAt])
 }

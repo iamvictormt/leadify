@@ -61,7 +61,9 @@ export const ModelName = {
   Plan: 'Plan',
   Subscription: 'Subscription',
   LeadHistory: 'LeadHistory',
-  AiLog: 'AiLog'
+  AiLog: 'AiLog',
+  WhatsAppConfig: 'WhatsAppConfig',
+  WhatsAppMessageDedup: 'WhatsAppMessageDedup'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -156,6 +158,8 @@ export const MessageScalarFieldEnum = {
   senderType: 'senderType',
   content: 'content',
   aiGenerated: 'aiGenerated',
+  whatsappMsgId: 'whatsappMsgId',
+  status: 'status',
   sentAt: 'sentAt',
   createdAt: 'createdAt'
 } as const
@@ -226,6 +230,29 @@ export const AiLogScalarFieldEnum = {
 } as const
 
 export type AiLogScalarFieldEnum = (typeof AiLogScalarFieldEnum)[keyof typeof AiLogScalarFieldEnum]
+
+
+export const WhatsAppConfigScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  wabaId: 'wabaId',
+  phoneNumberId: 'phoneNumberId',
+  accessToken: 'accessToken',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WhatsAppConfigScalarFieldEnum = (typeof WhatsAppConfigScalarFieldEnum)[keyof typeof WhatsAppConfigScalarFieldEnum]
+
+
+export const WhatsAppMessageDedupScalarFieldEnum = {
+  id: 'id',
+  whatsappMsgId: 'whatsappMsgId',
+  companyId: 'companyId',
+  receivedAt: 'receivedAt'
+} as const
+
+export type WhatsAppMessageDedupScalarFieldEnum = (typeof WhatsAppMessageDedupScalarFieldEnum)[keyof typeof WhatsAppMessageDedupScalarFieldEnum]
 
 
 export const SortOrder = {

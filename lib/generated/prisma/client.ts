@@ -96,3 +96,13 @@ export type LeadHistory = Prisma.LeadHistoryModel
  * 
  */
 export type AiLog = Prisma.AiLogModel
+/**
+ * Model WhatsAppConfig
+ * 
+ */
+export type WhatsAppConfig = Prisma.WhatsAppConfigModel
+/**
+ * Model WhatsAppMessageDedup
+ * 
+ */
+export type WhatsAppMessageDedup = Prisma.WhatsAppMessageDedupModel

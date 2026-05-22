@@ -213,6 +213,7 @@ export type CompanyWhereInput = {
   knowledgeBase?: Prisma.KnowledgeBaseListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
   aiLogs?: Prisma.AiLogListRelationFilter
+  whatsappConfig?: Prisma.XOR<Prisma.WhatsAppConfigNullableScalarRelationFilter, Prisma.WhatsAppConfigWhereInput> | null
 }
 
 export type CompanyOrderByWithRelationInput = {
@@ -231,6 +232,7 @@ export type CompanyOrderByWithRelationInput = {
   knowledgeBase?: Prisma.KnowledgeBaseOrderByRelationAggregateInput
   subscriptions?: Prisma.SubscriptionOrderByRelationAggregateInput
   aiLogs?: Prisma.AiLogOrderByRelationAggregateInput
+  whatsappConfig?: Prisma.WhatsAppConfigOrderByWithRelationInput
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -252,6 +254,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   knowledgeBase?: Prisma.KnowledgeBaseListRelationFilter
   subscriptions?: Prisma.SubscriptionListRelationFilter
   aiLogs?: Prisma.AiLogListRelationFilter
+  whatsappConfig?: Prisma.XOR<Prisma.WhatsAppConfigNullableScalarRelationFilter, Prisma.WhatsAppConfigWhereInput> | null
 }, "id">
 
 export type CompanyOrderByWithAggregationInput = {
@@ -298,6 +301,7 @@ export type CompanyCreateInput = {
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateInput = {
@@ -316,6 +320,7 @@ export type CompanyUncheckedCreateInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUpdateInput = {
@@ -334,6 +339,7 @@ export type CompanyUpdateInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateInput = {
@@ -352,6 +358,7 @@ export type CompanyUncheckedUpdateInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyCreateManyInput = {
@@ -535,6 +542,20 @@ export type CompanyUpdateOneRequiredWithoutAiLogsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutAiLogsInput, Prisma.CompanyUpdateWithoutAiLogsInput>, Prisma.CompanyUncheckedUpdateWithoutAiLogsInput>
 }
 
+export type CompanyCreateNestedOneWithoutWhatsappConfigInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutWhatsappConfigInput, Prisma.CompanyUncheckedCreateWithoutWhatsappConfigInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutWhatsappConfigInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutWhatsappConfigNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutWhatsappConfigInput, Prisma.CompanyUncheckedCreateWithoutWhatsappConfigInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutWhatsappConfigInput
+  upsert?: Prisma.CompanyUpsertWithoutWhatsappConfigInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutWhatsappConfigInput, Prisma.CompanyUpdateWithoutWhatsappConfigInput>, Prisma.CompanyUncheckedUpdateWithoutWhatsappConfigInput>
+}
+
 export type CompanyCreateWithoutUsersInput = {
   id?: string
   name: string
@@ -550,6 +571,7 @@ export type CompanyCreateWithoutUsersInput = {
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutUsersInput = {
@@ -567,6 +589,7 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutUsersInput = {
@@ -600,6 +623,7 @@ export type CompanyUpdateWithoutUsersInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutUsersInput = {
@@ -617,6 +641,7 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutStatusesInput = {
@@ -634,6 +659,7 @@ export type CompanyCreateWithoutStatusesInput = {
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutStatusesInput = {
@@ -651,6 +677,7 @@ export type CompanyUncheckedCreateWithoutStatusesInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutStatusesInput = {
@@ -684,6 +711,7 @@ export type CompanyUpdateWithoutStatusesInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutStatusesInput = {
@@ -701,6 +729,7 @@ export type CompanyUncheckedUpdateWithoutStatusesInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutLeadsInput = {
@@ -718,6 +747,7 @@ export type CompanyCreateWithoutLeadsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutLeadsInput = {
@@ -735,6 +765,7 @@ export type CompanyUncheckedCreateWithoutLeadsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutLeadsInput = {
@@ -768,6 +799,7 @@ export type CompanyUpdateWithoutLeadsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutLeadsInput = {
@@ -785,6 +817,7 @@ export type CompanyUncheckedUpdateWithoutLeadsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutConversationsInput = {
@@ -802,6 +835,7 @@ export type CompanyCreateWithoutConversationsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutConversationsInput = {
@@ -819,6 +853,7 @@ export type CompanyUncheckedCreateWithoutConversationsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutConversationsInput = {
@@ -852,6 +887,7 @@ export type CompanyUpdateWithoutConversationsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutConversationsInput = {
@@ -869,6 +905,7 @@ export type CompanyUncheckedUpdateWithoutConversationsInput = {
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutKnowledgeBaseInput = {
@@ -886,6 +923,7 @@ export type CompanyCreateWithoutKnowledgeBaseInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutKnowledgeBaseInput = {
@@ -903,6 +941,7 @@ export type CompanyUncheckedCreateWithoutKnowledgeBaseInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutKnowledgeBaseInput = {
@@ -936,6 +975,7 @@ export type CompanyUpdateWithoutKnowledgeBaseInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutKnowledgeBaseInput = {
@@ -953,6 +993,7 @@ export type CompanyUncheckedUpdateWithoutKnowledgeBaseInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutSubscriptionsInput = {
@@ -970,6 +1011,7 @@ export type CompanyCreateWithoutSubscriptionsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutSubscriptionsInput = {
@@ -987,6 +1029,7 @@ export type CompanyUncheckedCreateWithoutSubscriptionsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutSubscriptionsInput = {
@@ -1020,6 +1063,7 @@ export type CompanyUpdateWithoutSubscriptionsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutSubscriptionsInput = {
@@ -1037,6 +1081,7 @@ export type CompanyUncheckedUpdateWithoutSubscriptionsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutAiLogsInput = {
@@ -1054,6 +1099,7 @@ export type CompanyCreateWithoutAiLogsInput = {
   conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutAiLogsInput = {
@@ -1071,6 +1117,7 @@ export type CompanyUncheckedCreateWithoutAiLogsInput = {
   conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
   subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedCreateNestedOneWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutAiLogsInput = {
@@ -1104,6 +1151,7 @@ export type CompanyUpdateWithoutAiLogsInput = {
   conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUpdateOneWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutAiLogsInput = {
@@ -1121,6 +1169,95 @@ export type CompanyUncheckedUpdateWithoutAiLogsInput = {
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
   knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
   subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  whatsappConfig?: Prisma.WhatsAppConfigUncheckedUpdateOneWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutWhatsappConfigInput = {
+  id?: string
+  name: string
+  segment: string
+  phone?: string | null
+  email?: string | null
+  document?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadCreateNestedManyWithoutCompanyInput
+  statuses?: Prisma.LeadStatusCreateNestedManyWithoutCompanyInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
+  knowledgeBase?: Prisma.KnowledgeBaseCreateNestedManyWithoutCompanyInput
+  subscriptions?: Prisma.SubscriptionCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutWhatsappConfigInput = {
+  id?: string
+  name: string
+  segment: string
+  phone?: string | null
+  email?: string | null
+  document?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutCompanyInput
+  statuses?: Prisma.LeadStatusUncheckedCreateNestedManyWithoutCompanyInput
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
+  knowledgeBase?: Prisma.KnowledgeBaseUncheckedCreateNestedManyWithoutCompanyInput
+  subscriptions?: Prisma.SubscriptionUncheckedCreateNestedManyWithoutCompanyInput
+  aiLogs?: Prisma.AiLogUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutWhatsappConfigInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutWhatsappConfigInput, Prisma.CompanyUncheckedCreateWithoutWhatsappConfigInput>
+}
+
+export type CompanyUpsertWithoutWhatsappConfigInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutWhatsappConfigInput, Prisma.CompanyUncheckedUpdateWithoutWhatsappConfigInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutWhatsappConfigInput, Prisma.CompanyUncheckedCreateWithoutWhatsappConfigInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutWhatsappConfigInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutWhatsappConfigInput, Prisma.CompanyUncheckedUpdateWithoutWhatsappConfigInput>
+}
+
+export type CompanyUpdateWithoutWhatsappConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  segment?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutCompanyNestedInput
+  statuses?: Prisma.LeadStatusUpdateManyWithoutCompanyNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
+  knowledgeBase?: Prisma.KnowledgeBaseUpdateManyWithoutCompanyNestedInput
+  subscriptions?: Prisma.SubscriptionUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutWhatsappConfigInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  segment?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  document?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutCompanyNestedInput
+  statuses?: Prisma.LeadStatusUncheckedUpdateManyWithoutCompanyNestedInput
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
+  knowledgeBase?: Prisma.KnowledgeBaseUncheckedUpdateManyWithoutCompanyNestedInput
+  subscriptions?: Prisma.SubscriptionUncheckedUpdateManyWithoutCompanyNestedInput
+  aiLogs?: Prisma.AiLogUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -1224,6 +1361,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   knowledgeBase?: boolean | Prisma.Company$knowledgeBaseArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Company$subscriptionsArgs<ExtArgs>
   aiLogs?: boolean | Prisma.Company$aiLogsArgs<ExtArgs>
+  whatsappConfig?: boolean | Prisma.Company$whatsappConfigArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
@@ -1269,6 +1407,7 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   knowledgeBase?: boolean | Prisma.Company$knowledgeBaseArgs<ExtArgs>
   subscriptions?: boolean | Prisma.Company$subscriptionsArgs<ExtArgs>
   aiLogs?: boolean | Prisma.Company$aiLogsArgs<ExtArgs>
+  whatsappConfig?: boolean | Prisma.Company$whatsappConfigArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1284,6 +1423,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     knowledgeBase: Prisma.$KnowledgeBasePayload<ExtArgs>[]
     subscriptions: Prisma.$SubscriptionPayload<ExtArgs>[]
     aiLogs: Prisma.$AiLogPayload<ExtArgs>[]
+    whatsappConfig: Prisma.$WhatsAppConfigPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1695,6 +1835,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   knowledgeBase<T extends Prisma.Company$knowledgeBaseArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$knowledgeBaseArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$KnowledgeBasePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscriptions<T extends Prisma.Company$subscriptionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$subscriptionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   aiLogs<T extends Prisma.Company$aiLogsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$aiLogsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  whatsappConfig<T extends Prisma.Company$whatsappConfigArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$whatsappConfigArgs<ExtArgs>>): Prisma.Prisma__WhatsAppConfigClient<runtime.Types.Result.GetResult<Prisma.$WhatsAppConfigPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2290,6 +2431,25 @@ export type Company$aiLogsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.AiLogScalarFieldEnum | Prisma.AiLogScalarFieldEnum[]
+}
+
+/**
+ * Company.whatsappConfig
+ */
+export type Company$whatsappConfigArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WhatsAppConfig
+   */
+  select?: Prisma.WhatsAppConfigSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WhatsAppConfig
+   */
+  omit?: Prisma.WhatsAppConfigOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WhatsAppConfigInclude<ExtArgs> | null
+  where?: Prisma.WhatsAppConfigWhereInput
 }
 
 /**
