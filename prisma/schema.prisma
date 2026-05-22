@@ -22,8 +22,6 @@ model Company {
   subscriptions Subscription[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-
-  @@map("companies")
 }
 
 model User {
@@ -39,7 +37,6 @@ model User {
   updatedAt    DateTime @updatedAt
 
   @@index([companyId])
-  @@map("users")
 }
 
 model LeadStatus {
@@ -52,8 +49,6 @@ model LeadStatus {
   leads     Lead[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@map("lead_statuses")
 }
 
 model Lead {
@@ -72,8 +67,6 @@ model Lead {
   conversations Conversation[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-
-  @@map("leads")
 }
 
 model Conversation {
@@ -86,8 +79,6 @@ model Conversation {
   messages  Message[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-
-  @@map("conversations")
 }
 
 model Message {
@@ -99,8 +90,6 @@ model Message {
   aiGenerated    Boolean      @default(false)
   sentAt         DateTime?
   createdAt      DateTime     @default(now())
-
-  @@map("messages")
 }
 
 model KnowledgeBase {
@@ -113,7 +102,7 @@ model KnowledgeBase {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@map("knowledge_bases")
+  @@index([companyId, type])
 }
 
 model Plan {
@@ -126,8 +115,6 @@ model Plan {
   subscriptions Subscription[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-
-  @@map("plans")
 }
 
 model Subscription {
@@ -141,6 +128,4 @@ model Subscription {
   currentPeriodEnd   DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
-
-  @@map("subscriptions")
 }

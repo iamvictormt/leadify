@@ -1,99 +1,195 @@
 "use client"
 
-import { useState } from "react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Link from "next/link"
+import { useEffect, useMemo, useState } from "react"
+import { Bot, Brain, Check, Copy, Pencil, Plus, Send, Sparkles, Trash2, User } from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Badge } from "@/components/ui/badge"
-import { Brain, Send, Sparkles, User, Bot, Copy, Check } from "lucide-react"
 
-interface Message {
+type Message = {
   id: string
   role: "user" | "assistant" | "customer"
   content: string
   timestamp: string
 }
 
+type KnowledgeBaseItem = {
+  id: string
+  type: "SERVICE" | "BUSINESS_HOURS" | "FAQ"
+  title: string
+  content: string
+}
+
 const initialMessages: Message[] = [
   {
     id: "1",
     role: "customer",
-    content: "Olá, quanto custa o clareamento dental?",
+    content: "Olá, quanto custa o clareamento?",
     timestamp: "14:30",
   },
 ]
 
-const knowledgeBase = [
-  { type: "Serviço", title: "Clareamento Dental", content: "A partir de R$ 200" },
-  { type: "Serviço", title: "Limpeza", content: "R$ 80" },
-  { type: "FAQ", title: "Formas de pagamento", content: "Aceitamos PIX, cartão e parcelamento" },
-  { type: "Horário", title: "Funcionamento", content: "Segunda a sexta, 08h às 18h" },
-]
+const typeLabel = {
+  SERVICE: "Serviço",
+  BUSINESS_HOURS: "Horário",
+  FAQ: "FAQ",
+}
 
 export default function IAPage() {
   const [messages, setMessages] = useState<Message[]>(initialMessages)
+  const [knowledgeBase, setKnowledgeBase] = useState<KnowledgeBaseItem[]>([])
   const [input, setInput] = useState("")
+  const [isLoading, setIsLoading] = useState(true)
   const [isGenerating, setIsGenerating] = useState(false)
   const [copied, setCopied] = useState<string | null>(null)
+  const [editingItem, setEditingItem] = useState<KnowledgeBaseItem | null>(null)
+  const [error, setError] = useState("")
+
+  useEffect(() => {
+    const loadKnowledgeBase = async () => {
+      setIsLoading(true)
+
+      try {
+        const response = await fetch("/api/knowledge-base")
+
+        if (response.status === 401) {
+          window.location.href = "/login"
+          return
+        }
+
+        const data = await response.json()
+        setKnowledgeBase(data.items ?? [])
+      } catch {
+        setError("Não foi possível carregar a base de conhecimento.")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadKnowledgeBase()
+  }, [])
+
+  const contextPreview = useMemo(() => {
+    const services = knowledgeBase.filter((item) => item.type === "SERVICE")
+    const hours = knowledgeBase.filter((item) => item.type === "BUSINESS_HOURS")
+    const faqs = knowledgeBase.filter((item) => item.type === "FAQ")
+
+    return { services, hours, faqs }
+  }, [knowledgeBase])
 
   const generateResponse = () => {
     setIsGenerating(true)
-    
-    // Simula geração de resposta com IA
-    setTimeout(() => {
+
+    window.setTimeout(() => {
+      const firstService = contextPreview.services[0]
+      const firstHours = contextPreview.hours[0]
+      const firstFaq = contextPreview.faqs[0]
+      const details = [
+        firstService ? `${firstService.title} custa ${firstService.content}` : null,
+        firstHours ? `atendemos ${firstHours.title.toLowerCase()} das ${firstHours.content}` : null,
+        firstFaq ? `${firstFaq.title} ${firstFaq.content}` : null,
+      ].filter(Boolean)
+
       const aiResponse: Message = {
-        id: Date.now().toString(),
+        id: crypto.randomUUID(),
         role: "assistant",
-        content: "Olá! 😊 O clareamento dental começa em R$ 200. Temos várias opções que se adaptam às suas necessidades. Gostaria de agendar uma avaliação gratuita para conhecer melhor nossos tratamentos? Nosso horário de funcionamento é de segunda a sexta, das 08h às 18h.",
+        content: details.length
+          ? `Olá! ${details.join(". ")}. Posso te ajudar a agendar ou passar mais detalhes?`
+          : "Olá! Ainda preciso que você cadastre serviços, horários e FAQ para gerar respostas mais precisas.",
         timestamp: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
       }
-      setMessages((prev) => [...prev, aiResponse])
+
+      setMessages((current) => [...current, aiResponse])
       setIsGenerating(false)
-    }, 1500)
+    }, 900)
   }
 
   const handleSend = () => {
     if (!input.trim()) return
 
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      role: "user",
-      content: input,
-      timestamp: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
-    }
-    setMessages((prev) => [...prev, userMessage])
+    setMessages((current) => [
+      ...current,
+      {
+        id: crypto.randomUUID(),
+        role: "user",
+        content: input.trim(),
+        timestamp: new Date().toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }),
+      },
+    ])
     setInput("")
   }
 
   const copyToClipboard = (text: string, id: string) => {
     navigator.clipboard.writeText(text)
     setCopied(id)
-    setTimeout(() => setCopied(null), 2000)
+    window.setTimeout(() => setCopied(null), 2000)
+  }
+
+  const deleteItem = async (item: KnowledgeBaseItem) => {
+    const response = await fetch(`/api/knowledge-base/${item.id}`, { method: "DELETE" })
+
+    if (response.ok) {
+      setKnowledgeBase((current) => current.filter((currentItem) => currentItem.id !== item.id))
+    }
+  }
+
+  const saveEditingItem = async () => {
+    if (!editingItem) return
+
+    const response = await fetch(`/api/knowledge-base/${editingItem.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title: editingItem.title,
+        content: editingItem.content,
+      }),
+    })
+    const data = await response.json().catch(() => null)
+
+    if (!response.ok) {
+      setError(data?.error ?? "Não foi possível atualizar o item.")
+      return
+    }
+
+    setKnowledgeBase((current) => current.map((item) => (item.id === editingItem.id ? data.item : item)))
+    setEditingItem(null)
   }
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-balance">IA Assistente</h1>
-        <p className="mt-1 text-muted-foreground">
-          Gere respostas personalizadas com base na sua base de conhecimento
-        </p>
+      <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-balance">IA Assistente</h1>
+          <p className="mt-1 text-muted-foreground">
+            Gere respostas personalizadas com base nos serviços, horários e FAQ da empresa.
+          </p>
+        </div>
+        <Button className="bg-foreground text-background hover:bg-foreground/90" asChild>
+          <Link href="/dashboard/ia/configuracao">
+            <Plus className="h-4 w-4" />
+            Configurar base
+          </Link>
+        </Button>
       </div>
 
+      {error && <p className="rounded-md border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm text-destructive">{error}</p>}
+
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* Chat Area */}
         <div className="lg:col-span-2">
-          <Card className="flex h-[600px] flex-col border-0 shadow-sm">
+          <Card className="flex h-[620px] flex-col border-0 shadow-sm">
             <CardHeader className="border-b pb-4">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/40">
                     <span className="text-sm font-semibold">MS</span>
                   </div>
                   <div>
                     <CardTitle className="text-base">Maria Santos</CardTitle>
-                    <p className="text-sm text-muted-foreground">WhatsApp • Lead Novo</p>
+                    <p className="text-sm text-muted-foreground">WhatsApp - Lead novo</p>
                   </div>
                 </div>
                 <Badge className="bg-primary text-primary-foreground">Novo</Badge>
@@ -102,40 +198,22 @@ export default function IAPage() {
             <CardContent className="flex-1 overflow-y-auto p-4">
               <div className="space-y-4">
                 {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex ${message.role === "customer" ? "justify-start" : "justify-end"}`}
-                  >
+                  <div key={message.id} className={`flex ${message.role === "customer" ? "justify-start" : "justify-end"}`}>
                     <div
-                      className={`group relative max-w-[80%] rounded-2xl px-4 py-3 ${
+                      className={`group relative max-w-[80%] rounded-md px-4 py-3 ${
                         message.role === "customer"
                           ? "bg-secondary text-foreground"
                           : message.role === "assistant"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-foreground text-background"
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-foreground text-background"
                       }`}
                     >
                       <div className="mb-1 flex items-center gap-2 text-xs opacity-70">
-                        {message.role === "customer" ? (
-                          <>
-                            <User className="h-3 w-3" />
-                            Cliente
-                          </>
-                        ) : message.role === "assistant" ? (
-                          <>
-                            <Bot className="h-3 w-3" />
-                            IA Sugestão
-                          </>
-                        ) : (
-                          <>
-                            <User className="h-3 w-3" />
-                            Você
-                          </>
-                        )}
-                        <span>•</span>
+                        {message.role === "assistant" ? <Bot className="h-3 w-3" /> : <User className="h-3 w-3" />}
+                        {message.role === "customer" ? "Cliente" : message.role === "assistant" ? "IA" : "Você"}
                         <span>{message.timestamp}</span>
                       </div>
-                      <p className="text-sm">{message.content}</p>
+                      <p className="text-sm leading-6">{message.content}</p>
                       {message.role === "assistant" && (
                         <Button
                           variant="ghost"
@@ -143,11 +221,7 @@ export default function IAPage() {
                           className="absolute -right-10 top-1/2 h-8 w-8 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100"
                           onClick={() => copyToClipboard(message.content, message.id)}
                         >
-                          {copied === message.id ? (
-                            <Check className="h-4 w-4 text-green-500" />
-                          ) : (
-                            <Copy className="h-4 w-4" />
-                          )}
+                          {copied === message.id ? <Check className="h-4 w-4 text-green-600" /> : <Copy className="h-4 w-4" />}
                         </Button>
                       )}
                     </div>
@@ -155,44 +229,26 @@ export default function IAPage() {
                 ))}
                 {isGenerating && (
                   <div className="flex justify-end">
-                    <div className="max-w-[80%] rounded-2xl bg-primary px-4 py-3">
-                      <div className="flex items-center gap-2 text-xs text-primary-foreground/70">
-                        <Bot className="h-3 w-3" />
-                        IA Gerando...
-                      </div>
-                      <div className="mt-2 flex gap-1">
-                        <div className="h-2 w-2 animate-bounce rounded-full bg-primary-foreground/50" />
-                        <div className="h-2 w-2 animate-bounce rounded-full bg-primary-foreground/50 [animation-delay:0.1s]" />
-                        <div className="h-2 w-2 animate-bounce rounded-full bg-primary-foreground/50 [animation-delay:0.2s]" />
-                      </div>
-                    </div>
+                    <div className="rounded-md bg-primary px-4 py-3 text-sm text-primary-foreground">Gerando resposta...</div>
                   </div>
                 )}
               </div>
             </CardContent>
             <div className="border-t p-4">
-              <div className="flex gap-3">
-                <Button
-                  onClick={generateResponse}
-                  disabled={isGenerating}
-                  className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90"
-                >
+              <div className="flex flex-col gap-3 md:flex-row">
+                <Button onClick={generateResponse} disabled={isGenerating} className="bg-primary text-primary-foreground hover:bg-primary/90">
                   <Sparkles className="h-4 w-4" />
-                  Gerar Resposta
+                  Gerar resposta
                 </Button>
                 <div className="relative flex-1">
                   <Textarea
                     placeholder="Digite sua resposta ou edite a sugestão da IA..."
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    className="min-h-[44px] resize-none pr-12"
+                    onChange={(event) => setInput(event.target.value)}
+                    className="min-h-11 resize-none pr-12"
                     rows={1}
                   />
-                  <Button
-                    onClick={handleSend}
-                    size="icon"
-                    className="absolute bottom-2 right-2 h-8 w-8 bg-foreground text-background hover:bg-foreground/90"
-                  >
+                  <Button onClick={handleSend} size="icon" className="absolute bottom-2 right-2 h-8 w-8 bg-foreground text-background hover:bg-foreground/90">
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
@@ -201,46 +257,64 @@ export default function IAPage() {
           </Card>
         </div>
 
-        {/* Knowledge Base */}
         <div className="space-y-6">
           <Card className="border-0 shadow-sm">
             <CardHeader className="pb-3">
               <CardTitle className="flex items-center gap-2 text-lg">
                 <Brain className="h-5 w-5" />
-                Base de Conhecimento
+                Base de conhecimento
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {knowledgeBase.map((item, index) => (
-                <div
-                  key={index}
-                  className="rounded-xl border border-border bg-secondary/30 p-3"
-                >
-                  <div className="flex items-center gap-2">
-                    <Badge variant="outline" className="text-xs">
-                      {item.type}
-                    </Badge>
-                    <span className="text-sm font-medium">{item.title}</span>
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">{item.content}</p>
+              {isLoading && <p className="text-sm text-muted-foreground">Carregando base...</p>}
+              {!isLoading && !knowledgeBase.length && (
+                <div className="rounded-md border border-dashed border-border p-4">
+                  <p className="text-sm text-muted-foreground">A IA ainda não recebeu informações sobre a empresa.</p>
+                  <Button className="mt-4 w-full" variant="outline" asChild>
+                    <Link href="/dashboard/ia/configuracao">Iniciar configuração</Link>
+                  </Button>
+                </div>
+              )}
+              {knowledgeBase.map((item) => (
+                <div key={item.id} className="rounded-md border border-border bg-secondary/30 p-3">
+                  {editingItem?.id === item.id ? (
+                    <div className="space-y-3">
+                      <Input value={editingItem.title} onChange={(event) => setEditingItem({ ...editingItem, title: event.target.value })} />
+                      <Textarea value={editingItem.content} onChange={(event) => setEditingItem({ ...editingItem, content: event.target.value })} />
+                      <div className="flex gap-2">
+                        <Button size="sm" onClick={saveEditingItem}>
+                          Salvar
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => setEditingItem(null)}>
+                          Cancelar
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <Badge variant="outline" className="text-xs">
+                              {typeLabel[item.type]}
+                            </Badge>
+                            <span className="text-sm font-medium">{item.title}</span>
+                          </div>
+                          <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.content}</p>
+                        </div>
+                        <div className="flex gap-1">
+                          <Button size="icon-sm" variant="ghost" onClick={() => setEditingItem(item)}>
+                            <Pencil className="h-4 w-4" />
+                          </Button>
+                          <Button size="icon-sm" variant="ghost" onClick={() => deleteItem(item)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               ))}
-              <Button variant="outline" className="w-full">
-                Gerenciar Base
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="border-0 bg-primary shadow-sm">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-primary-foreground">
-                <Sparkles className="h-5 w-5" />
-                <span className="font-semibold">Dica</span>
-              </div>
-              <p className="mt-2 text-sm text-primary-foreground/80">
-                A IA usa sua base de conhecimento para gerar respostas precisas. 
-                Quanto mais informações você cadastrar, melhores serão as respostas!
-              </p>
             </CardContent>
           </Card>
         </div>

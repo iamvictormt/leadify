@@ -42,7 +42,11 @@ export default function LoginPage() {
         return
       }
 
-      router.push("/dashboard")
+      const knowledgeBaseResponse = await fetch("/api/knowledge-base")
+      const knowledgeBaseData = await knowledgeBaseResponse.json().catch(() => null)
+      const hasKnowledgeBase = Boolean(knowledgeBaseData?.items?.length)
+
+      router.push(hasKnowledgeBase ? "/dashboard" : "/dashboard/ia/configuracao")
       router.refresh()
     } catch {
       setError("Não foi possível conectar ao servidor.")

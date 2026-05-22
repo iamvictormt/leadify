@@ -88,7 +88,7 @@ export default function CadastrarPage() {
         return
       }
 
-      router.push("/dashboard")
+      router.push("/dashboard/ia/configuracao")
       router.refresh()
     } catch {
       setError("Não foi possível conectar ao servidor.")
