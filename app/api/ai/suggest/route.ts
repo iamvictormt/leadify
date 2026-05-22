@@ -1,5 +1,5 @@
+import Groq from "groq-sdk"
 import { NextResponse } from "next/server"
-import OpenAI from "openai"
 import { z } from "zod"
 
 import { getCurrentUser } from "@/lib/current-user"
@@ -31,11 +31,11 @@ export async function POST(request: Request) {
     )
   }
 
-  const apiKey = process.env.OPENAI_API_KEY
+  const apiKey = process.env.GROQ_API_KEY
 
   if (!apiKey) {
     return NextResponse.json(
-      { error: "Chave da API de IA não configurada" },
+      { error: "Chave da API de IA não configurada. Adicione GROQ_API_KEY no .env.local" },
       { status: 500 },
     )
   }
@@ -80,6 +80,7 @@ export async function POST(request: Request) {
 
   const companyName = user.company.name
   const leadName = parsed.data.leadName || "Cliente"
+  const model = "llama-3.1-8b-instant"
 
   const systemPrompt = `Você é um assistente de atendimento da empresa "${companyName}".
 Sua função é sugerir respostas para mensagens de clientes.
@@ -93,13 +94,13 @@ Regras:
 - Use o nome do cliente quando disponível.
 - Respostas curtas e objetivas.
 - Se não souber a resposta com base nas informações acima, diga que vai verificar e retornar.
-- Nunca invente preços, horários ou serviços que não estejam listados acima.`
-
-  const openai = new OpenAI({ apiKey })
-  const model = "gpt-4o-mini"
+- Nunca invente preços, horários ou serviços que não estejam listados acima.
+- Responda sempre em português brasileiro.`
 
   try {
-    const completion = await openai.chat.completions.create({
+    const groq = new Groq({ apiKey })
+
+    const completion = await groq.chat.completions.create({
       model,
       messages: [
         { role: "system", content: systemPrompt },
