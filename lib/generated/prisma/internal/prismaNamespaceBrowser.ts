@@ -59,7 +59,8 @@ export const ModelName = {
   Message: 'Message',
   KnowledgeBase: 'KnowledgeBase',
   Plan: 'Plan',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  LeadHistory: 'LeadHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -200,6 +201,18 @@ export const SubscriptionScalarFieldEnum = {
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const LeadHistoryScalarFieldEnum = {
+  id: 'id',
+  leadId: 'leadId',
+  oldStatus: 'oldStatus',
+  newStatus: 'newStatus',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type LeadHistoryScalarFieldEnum = (typeof LeadHistoryScalarFieldEnum)[keyof typeof LeadHistoryScalarFieldEnum]
 
 
 export const SortOrder = {

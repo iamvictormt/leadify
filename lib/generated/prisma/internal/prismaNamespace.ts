@@ -392,7 +392,8 @@ export const ModelName = {
   Message: 'Message',
   KnowledgeBase: 'KnowledgeBase',
   Plan: 'Plan',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  LeadHistory: 'LeadHistory'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "leadStatus" | "lead" | "conversation" | "message" | "knowledgeBase" | "plan" | "subscription"
+    modelProps: "company" | "user" | "leadStatus" | "lead" | "conversation" | "message" | "knowledgeBase" | "plan" | "subscription" | "leadHistory"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    LeadHistory: {
+      payload: Prisma.$LeadHistoryPayload<ExtArgs>
+      fields: Prisma.LeadHistoryFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.LeadHistoryFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.LeadHistoryFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>
+        }
+        findFirst: {
+          args: Prisma.LeadHistoryFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.LeadHistoryFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>
+        }
+        findMany: {
+          args: Prisma.LeadHistoryFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>[]
+        }
+        create: {
+          args: Prisma.LeadHistoryCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>
+        }
+        createMany: {
+          args: Prisma.LeadHistoryCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.LeadHistoryCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>[]
+        }
+        delete: {
+          args: Prisma.LeadHistoryDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>
+        }
+        update: {
+          args: Prisma.LeadHistoryUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>
+        }
+        deleteMany: {
+          args: Prisma.LeadHistoryDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.LeadHistoryUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.LeadHistoryUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>[]
+        }
+        upsert: {
+          args: Prisma.LeadHistoryUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$LeadHistoryPayload>
+        }
+        aggregate: {
+          args: Prisma.LeadHistoryAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateLeadHistory>
+        }
+        groupBy: {
+          args: Prisma.LeadHistoryGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeadHistoryGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.LeadHistoryCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.LeadHistoryCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1239,6 +1314,18 @@ export const SubscriptionScalarFieldEnum = {
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const LeadHistoryScalarFieldEnum = {
+  id: 'id',
+  leadId: 'leadId',
+  oldStatus: 'oldStatus',
+  newStatus: 'newStatus',
+  userId: 'userId',
+  createdAt: 'createdAt'
+} as const
+
+export type LeadHistoryScalarFieldEnum = (typeof LeadHistoryScalarFieldEnum)[keyof typeof LeadHistoryScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1452,6 +1539,7 @@ export type GlobalOmitConfig = {
   knowledgeBase?: Prisma.KnowledgeBaseOmit
   plan?: Prisma.PlanOmit
   subscription?: Prisma.SubscriptionOmit
+  leadHistory?: Prisma.LeadHistoryOmit
 }
 
 /* Types for Logging */

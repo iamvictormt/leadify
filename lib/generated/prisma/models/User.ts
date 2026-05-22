@@ -208,6 +208,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   leads?: Prisma.LeadListRelationFilter
+  leadHistories?: Prisma.LeadHistoryListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -221,6 +222,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   company?: Prisma.CompanyOrderByWithRelationInput
   leads?: Prisma.LeadOrderByRelationAggregateInput
+  leadHistories?: Prisma.LeadHistoryOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -237,6 +239,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   leads?: Prisma.LeadListRelationFilter
+  leadHistories?: Prisma.LeadHistoryListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -277,6 +280,7 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutUsersInput
   leads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+  leadHistories?: Prisma.LeadHistoryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -289,6 +293,7 @@ export type UserUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+  leadHistories?: Prisma.LeadHistoryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -301,6 +306,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
   leads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+  leadHistories?: Prisma.LeadHistoryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -313,6 +319,7 @@ export type UserUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
+  leadHistories?: Prisma.LeadHistoryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -395,6 +402,11 @@ export type UserNullableScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput | null
 }
 
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
 export type UserCreateNestedManyWithoutCompanyInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutCompanyInput, Prisma.UserUncheckedCreateWithoutCompanyInput> | Prisma.UserCreateWithoutCompanyInput[] | Prisma.UserUncheckedCreateWithoutCompanyInput[]
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompanyInput | Prisma.UserCreateOrConnectWithoutCompanyInput[]
@@ -453,6 +465,20 @@ export type UserUpdateOneWithoutLeadsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadsInput, Prisma.UserUpdateWithoutLeadsInput>, Prisma.UserUncheckedUpdateWithoutLeadsInput>
 }
 
+export type UserCreateNestedOneWithoutLeadHistoriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadHistoriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutLeadHistoriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadHistoriesInput
+  upsert?: Prisma.UserUpsertWithoutLeadHistoriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadHistoriesInput, Prisma.UserUpdateWithoutLeadHistoriesInput>, Prisma.UserUncheckedUpdateWithoutLeadHistoriesInput>
+}
+
 export type UserCreateWithoutCompanyInput = {
   id?: string
   name: string
@@ -462,6 +488,7 @@ export type UserCreateWithoutCompanyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+  leadHistories?: Prisma.LeadHistoryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCompanyInput = {
@@ -473,6 +500,7 @@ export type UserUncheckedCreateWithoutCompanyInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+  leadHistories?: Prisma.LeadHistoryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCompanyInput = {
@@ -524,6 +552,7 @@ export type UserCreateWithoutLeadsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  leadHistories?: Prisma.LeadHistoryCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLeadsInput = {
@@ -535,6 +564,7 @@ export type UserUncheckedCreateWithoutLeadsInput = {
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  leadHistories?: Prisma.LeadHistoryUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLeadsInput = {
@@ -562,6 +592,7 @@ export type UserUpdateWithoutLeadsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
+  leadHistories?: Prisma.LeadHistoryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLeadsInput = {
@@ -573,6 +604,71 @@ export type UserUncheckedUpdateWithoutLeadsInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leadHistories?: Prisma.LeadHistoryUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutLeadHistoriesInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  leads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserUncheckedCreateWithoutLeadHistoriesInput = {
+  id?: string
+  name: string
+  email: string
+  passwordHash: string
+  role?: string
+  companyId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserCreateOrConnectWithoutLeadHistoriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
+}
+
+export type UserUpsertWithoutLeadHistoriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutLeadHistoriesInput, Prisma.UserUncheckedUpdateWithoutLeadHistoriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutLeadHistoriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutLeadHistoriesInput, Prisma.UserUncheckedUpdateWithoutLeadHistoriesInput>
+}
+
+export type UserUpdateWithoutLeadHistoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
+  leads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutLeadHistoriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  leads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateManyCompanyInput = {
@@ -594,6 +690,7 @@ export type UserUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+  leadHistories?: Prisma.LeadHistoryUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCompanyInput = {
@@ -605,6 +702,7 @@ export type UserUncheckedUpdateWithoutCompanyInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   leads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
+  leadHistories?: Prisma.LeadHistoryUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutCompanyInput = {
@@ -624,10 +722,12 @@ export type UserUncheckedUpdateManyWithoutCompanyInput = {
 
 export type UserCountOutputType = {
   leads: number
+  leadHistories: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   leads?: boolean | UserCountOutputTypeCountLeadsArgs
+  leadHistories?: boolean | UserCountOutputTypeCountLeadHistoriesArgs
 }
 
 /**
@@ -647,6 +747,13 @@ export type UserCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Exte
   where?: Prisma.LeadWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountLeadHistoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.LeadHistoryWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -659,6 +766,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
+  leadHistories?: boolean | Prisma.User$leadHistoriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -701,6 +809,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
+  leadHistories?: boolean | Prisma.User$leadHistoriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -715,6 +824,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     company: Prisma.$CompanyPayload<ExtArgs>
     leads: Prisma.$LeadPayload<ExtArgs>[]
+    leadHistories: Prisma.$LeadHistoryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1121,6 +1231,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   leads<T extends Prisma.User$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  leadHistories<T extends Prisma.User$leadHistoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadHistoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1580,6 +1691,30 @@ export type User$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   take?: number
   skip?: number
   distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+}
+
+/**
+ * User.leadHistories
+ */
+export type User$leadHistoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the LeadHistory
+   */
+  select?: Prisma.LeadHistorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the LeadHistory
+   */
+  omit?: Prisma.LeadHistoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.LeadHistoryInclude<ExtArgs> | null
+  where?: Prisma.LeadHistoryWhereInput
+  orderBy?: Prisma.LeadHistoryOrderByWithRelationInput | Prisma.LeadHistoryOrderByWithRelationInput[]
+  cursor?: Prisma.LeadHistoryWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.LeadHistoryScalarFieldEnum | Prisma.LeadHistoryScalarFieldEnum[]
 }
 
 /**

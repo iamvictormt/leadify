@@ -25,16 +25,17 @@ model Company {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  name         String
-  email        String   @unique
-  passwordHash String
-  role         String   @default("ADMIN")
-  companyId    String
-  company      Company  @relation(fields: [companyId], references: [id])
-  leads        Lead[]
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id            String        @id @default(uuid())
+  name          String
+  email         String        @unique
+  passwordHash  String
+  role          String        @default("ADMIN")
+  companyId     String
+  company       Company       @relation(fields: [companyId], references: [id])
+  leads         Lead[]
+  leadHistories LeadHistory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   @@index([companyId])
 }
@@ -65,6 +66,7 @@ model Lead {
   assignedTo    User?          @relation(fields: [assignedToId], references: [id])
   notes         String?
   conversations Conversation[]
+  history       LeadHistory[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 }
@@ -128,4 +130,17 @@ model Subscription {
   currentPeriodEnd   DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
+}
+
+model LeadHistory {
+  id        String   @id @default(uuid())
+  leadId    String
+  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  oldStatus String?
+  newStatus String
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@index([leadId])
 }

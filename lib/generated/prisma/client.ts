@@ -86,3 +86,8 @@ export type Plan = Prisma.PlanModel
  * 
  */
 export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model LeadHistory
+ * 
+ */
+export type LeadHistory = Prisma.LeadHistoryModel

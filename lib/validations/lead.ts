@@ -32,7 +32,7 @@ export const createLeadSchema = z.object({
     .nullish(),
   source: leadSourceSchema.default("MANUAL"),
   assignedToId: z.string().uuid().nullish(),
-  notes: z.string().nullish(),
+  notes: z.string().max(5000, "Notas devem ter no máximo 5000 caracteres").nullish(),
 })
 
 export type CreateLeadInput = z.infer<typeof createLeadSchema>

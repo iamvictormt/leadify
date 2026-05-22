@@ -75,6 +75,12 @@ export async function DELETE(_request: Request, context: RouteContext<"/api/lead
 
   const { id } = await context.params
 
+  // Validate UUID v4 format
+  const uuidV4Regex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+  if (!uuidV4Regex.test(id)) {
+    return NextResponse.json({ error: "Lead não encontrado" }, { status: 404 })
+  }
+
   const existingLead = await prisma.lead.findFirst({
     where: {
       id,
@@ -104,7 +110,14 @@ export async function DELETE(_request: Request, context: RouteContext<"/api/lead
         },
       })
 
-      // 3. Delete the lead itself
+      // 3. Delete all lead history records
+      await tx.leadHistory.deleteMany({
+        where: {
+          leadId: id,
+        },
+      })
+
+      // 4. Delete the lead itself
       await tx.lead.delete({
         where: { id },
       })
