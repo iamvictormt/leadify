@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company {
+  id            String          @id @default(uuid())
+  name          String
+  segment       String
+  phone         String?
+  email         String?
+  document      String?
+  users         User[]
+  leads         Lead[]
+  statuses      LeadStatus[]
+  conversations Conversation[]
+  knowledgeBase KnowledgeBase[]
+  subscriptions Subscription[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  @@map("companies")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         String   @default("ADMIN")
+  companyId    String
+  company      Company  @relation(fields: [companyId], references: [id])
+  leads        Lead[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([companyId])
+  @@map("users")
+}
+
+model LeadStatus {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  name      String
+  order     Int
+  color     String?
+  leads     Lead[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("lead_statuses")
+}
+
+model Lead {
+  id            String         @id @default(uuid())
+  companyId     String
+  company       Company        @relation(fields: [companyId], references: [id])
+  name          String
+  phone         String?
+  email         String?
+  source        String         @default("MANUAL")
+  statusId      String
+  status        LeadStatus     @relation(fields: [statusId], references: [id])
+  assignedToId  String?
+  assignedTo    User?          @relation(fields: [assignedToId], references: [id])
+  notes         String?
+  conversations Conversation[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@map("leads")
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  companyId String
+  company   Company   @relation(fields: [companyId], references: [id])
+  leadId    String
+  lead      Lead      @relation(fields: [leadId], references: [id])
+  channel   String    @default("MANUAL")
+  messages  Message[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("conversations")
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  senderType     String
+  content        String
+  aiGenerated    Boolean      @default(false)
+  sentAt         DateTime?
+  createdAt      DateTime     @default(now())
+
+  @@map("messages")
+}
+
+model KnowledgeBase {
+  id        String   @id @default(uuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  type      String
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("knowledge_bases")
+}
+
+model Plan {
+  id            String         @id @default(uuid())
+  name          String
+  price         Int
+  aiLimit       Int
+  leadLimit     Int?
+  userLimit     Int?
+  subscriptions Subscription[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@map("plans")
+}
+
+model Subscription {
+  id                 String    @id @default(uuid())
+  companyId          String
+  company            Company   @relation(fields: [companyId], references: [id])
+  planId             String
+  plan               Plan      @relation(fields: [planId], references: [id])
+  status             String
+  currentPeriodStart DateTime?
+  currentPeriodEnd   DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  @@map("subscriptions")
+}

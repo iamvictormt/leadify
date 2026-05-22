@@ -1,0 +1,72 @@
+"use client"
+
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts"
+
+const data = [
+  { name: "WhatsApp", value: 45, color: "#CCE2C8" },
+  { name: "Instagram", value: 25, color: "#303030" },
+  { name: "Site", value: 20, color: "#8E8F8E" },
+  { name: "Outros", value: 10, color: "#D8D8D8" },
+]
+
+export function ConversionChart() {
+  const total = data.reduce((acc, item) => acc + item.value, 0)
+
+  return (
+    <Card className="border-0 shadow-sm">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-semibold">Origem dos Leads</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex items-center gap-8">
+          <div className="relative h-[180px] w-[180px]">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={data}
+                  cx="50%"
+                  cy="50%"
+                  innerRadius={50}
+                  outerRadius={80}
+                  paddingAngle={2}
+                  dataKey="value"
+                >
+                  {data.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#fff",
+                    border: "none",
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  }}
+                />
+              </PieChart>
+            </ResponsiveContainer>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-sm text-muted-foreground">Total</span>
+              <span className="text-2xl font-bold">{total}</span>
+            </div>
+          </div>
+          <div className="flex-1 space-y-3">
+            {data.map((item) => (
+              <div key={item.name} className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div
+                    className="h-3 w-3 rounded-full"
+                    style={{ backgroundColor: item.color }}
+                  />
+                  <span className="text-sm">{item.name}</span>
+                </div>
+                <span className="text-sm font-medium">{item.value}%</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
