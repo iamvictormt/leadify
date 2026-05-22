@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { Toaster } from "sonner"
 import { Sidebar } from "@/components/sidebar"
 import { Header } from "@/components/header"
 import { cn } from "@/lib/utils"
@@ -30,6 +31,7 @@ export default function DashboardLayout({
         <Header onMenuClick={() => setMobileOpen(true)} sidebarCollapsed={collapsed} />
         <main className="p-4 md:p-6">{children}</main>
       </div>
+      <Toaster richColors />
     </div>
   )
 }

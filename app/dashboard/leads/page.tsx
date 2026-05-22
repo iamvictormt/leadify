@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { format } from "date-fns"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   Table,
   TableBody,
@@ -22,116 +24,104 @@ import {
 import {
   Plus,
   Search,
-  Filter,
   MoreHorizontal,
-  Phone,
-  Mail,
-  MessageSquare,
-  Eye,
   Pencil,
   Trash2,
 } from "lucide-react"
+import { LeadFormDialog } from "@/components/leads/lead-form-dialog"
+import { DeleteConfirmDialog } from "@/components/leads/delete-confirm-dialog"
 
-const leads = [
-  {
-    id: "1",
-    name: "Maria Santos",
-    email: "maria@email.com",
-    phone: "(11) 99999-0001",
-    source: "WhatsApp",
-    status: "Novo",
-    statusColor: "bg-primary text-primary-foreground",
-    assignedTo: "Victor Silva",
-    createdAt: "22/01/2024",
-  },
-  {
-    id: "2",
-    name: "João Silva",
-    email: "joao@email.com",
-    phone: "(11) 99999-0002",
-    source: "Instagram",
-    status: "Em conversa",
-    statusColor: "bg-[#EEFF41] text-foreground",
-    assignedTo: "Victor Silva",
-    createdAt: "21/01/2024",
-  },
-  {
-    id: "3",
-    name: "Ana Oliveira",
-    email: "ana@email.com",
-    phone: "(11) 99999-0003",
-    source: "WhatsApp",
-    status: "Proposta",
-    statusColor: "bg-blue-100 text-blue-700",
-    assignedTo: "Maria Costa",
-    createdAt: "20/01/2024",
-  },
-  {
-    id: "4",
-    name: "Carlos Pereira",
-    email: "carlos@email.com",
-    phone: "(11) 99999-0004",
-    source: "Site",
-    status: "Novo",
-    statusColor: "bg-primary text-primary-foreground",
-    assignedTo: "Victor Silva",
-    createdAt: "19/01/2024",
-  },
-  {
-    id: "5",
-    name: "Fernanda Lima",
-    email: "fernanda@email.com",
-    phone: "(11) 99999-0005",
-    source: "WhatsApp",
-    status: "Fechado",
-    statusColor: "bg-green-100 text-green-700",
-    assignedTo: "Maria Costa",
-    createdAt: "18/01/2024",
-  },
-  {
-    id: "6",
-    name: "Pedro Costa",
-    email: "pedro@email.com",
-    phone: "(11) 99999-0006",
-    source: "Instagram",
-    status: "Perdido",
-    statusColor: "bg-red-100 text-red-700",
-    assignedTo: "Victor Silva",
-    createdAt: "17/01/2024",
-  },
-  {
-    id: "7",
-    name: "Lucia Mendes",
-    email: "lucia@email.com",
-    phone: "(11) 99999-0007",
-    source: "WhatsApp",
-    status: "Em conversa",
-    statusColor: "bg-[#EEFF41] text-foreground",
-    assignedTo: "Maria Costa",
-    createdAt: "16/01/2024",
-  },
-  {
-    id: "8",
-    name: "Roberto Alves",
-    email: "roberto@email.com",
-    phone: "(11) 99999-0008",
-    source: "Site",
-    status: "Proposta",
-    statusColor: "bg-blue-100 text-blue-700",
-    assignedTo: "Victor Silva",
-    createdAt: "15/01/2024",
-  },
-]
+interface LeadStatus {
+  id: string
+  name: string
+  color?: string | null
+}
+
+interface LeadUser {
+  id: string
+  name: string
+}
+
+interface Lead {
+  id: string
+  name: string
+  email?: string | null
+  phone?: string | null
+  source: string
+  status: LeadStatus
+  assignedTo?: LeadUser | null
+  assignedToId?: string | null
+  notes?: string | null
+  createdAt: string
+}
 
 export default function LeadsPage() {
+  const [leads, setLeads] = useState<Lead[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
 
-  const filteredLeads = leads.filter(
-    (lead) =>
-      lead.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      lead.phone.includes(searchQuery)
-  )
+  // Dialog states
+  const [formDialogOpen, setFormDialogOpen] = useState(false)
+  const [editingLead, setEditingLead] = useState<Lead | null>(null)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [deletingLead, setDeletingLead] = useState<{ id: string; name: string } | null>(null)
+
+  const fetchLeads = useCallback(async () => {
+    setLoading(true)
+    setError(null)
+
+    try {
+      const response = await fetch("/api/leads")
+
+      if (!response.ok) {
+        throw new Error("Erro ao carregar leads")
+      }
+
+      const data = await response.json()
+      setLeads(data.leads)
+    } catch {
+      setError("Não foi possível carregar os leads. Tente novamente.")
+    } finally {
+      setLoading(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchLeads()
+  }, [fetchLeads])
+
+  const filteredLeads = leads.filter((lead) => {
+    const query = searchQuery.toLowerCase()
+    return (
+      lead.name.toLowerCase().includes(query) ||
+      (lead.email?.toLowerCase().includes(query) ?? false) ||
+      (lead.phone?.toLowerCase().includes(query) ?? false)
+    )
+  })
+
+  function handleNewLead() {
+    setEditingLead(null)
+    setFormDialogOpen(true)
+  }
+
+  function handleEditLead(lead: Lead) {
+    setEditingLead(lead)
+    setFormDialogOpen(true)
+  }
+
+  function handleDeleteLead(lead: Lead) {
+    setDeletingLead({ id: lead.id, name: lead.name })
+    setDeleteDialogOpen(true)
+  }
+
+  function handleFormSuccess() {
+    fetchLeads()
+  }
+
+  function handleDeleteSuccess() {
+    fetchLeads()
+  }
 
   return (
     <div className="space-y-6">
@@ -142,7 +132,10 @@ export default function LeadsPage() {
             Gerencie todos os seus leads em um só lugar
           </p>
         </div>
-        <Button className="gap-2 bg-foreground text-background hover:bg-foreground/90">
+        <Button
+          className="gap-2 bg-foreground text-background hover:bg-foreground/90"
+          onClick={handleNewLead}
+        >
           <Plus className="h-4 w-4" />
           Novo Lead
         </Button>
@@ -162,95 +155,129 @@ export default function LeadsPage() {
                   className="w-64 border-0 bg-secondary pl-10"
                 />
               </div>
-              <Button variant="outline" size="icon">
-                <Filter className="h-4 w-4" />
-              </Button>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Lead</TableHead>
-                <TableHead>Contato</TableHead>
-                <TableHead>Origem</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Responsável</TableHead>
-                <TableHead>Data</TableHead>
-                <TableHead className="w-12"></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredLeads.map((lead) => (
-                <TableRow key={lead.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
-                        <span className="text-xs font-semibold">
-                          {lead.name.split(" ").map((n) => n[0]).join("")}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-medium">{lead.name}</p>
-                        <p className="text-sm text-muted-foreground">{lead.email}</p>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <Phone className="h-4 w-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <Mail className="h-4 w-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" className="h-8 w-8">
-                        <MessageSquare className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{lead.source}</span>
-                  </TableCell>
-                  <TableCell>
-                    <Badge className={lead.statusColor}>{lead.status}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{lead.assignedTo}</span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm text-muted-foreground">{lead.createdAt}</span>
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem>
-                          <Eye className="mr-2 h-4 w-4" />
-                          Ver detalhes
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Pencil className="mr-2 h-4 w-4" />
-                          Editar
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
-                          <Trash2 className="mr-2 h-4 w-4" />
-                          Excluir
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </TableCell>
-                </TableRow>
+          {loading ? (
+            <div className="space-y-4">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex items-center gap-4">
+                  <Skeleton className="h-10 w-10 rounded-full" />
+                  <div className="flex-1 space-y-2">
+                    <Skeleton className="h-4 w-[200px]" />
+                    <Skeleton className="h-3 w-[150px]" />
+                  </div>
+                  <Skeleton className="h-4 w-[100px]" />
+                  <Skeleton className="h-4 w-[80px]" />
+                  <Skeleton className="h-4 w-[100px]" />
+                  <Skeleton className="h-4 w-[80px]" />
+                </div>
               ))}
-            </TableBody>
-          </Table>
+            </div>
+          ) : error ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <p className="text-muted-foreground">{error}</p>
+              <Button variant="outline" className="mt-4" onClick={fetchLeads}>
+                Tentar novamente
+              </Button>
+            </div>
+          ) : leads.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-12">
+              <p className="text-muted-foreground">Nenhum lead cadastrado</p>
+              <Button className="mt-4" onClick={handleNewLead}>
+                <Plus className="mr-2 h-4 w-4" />
+                Criar primeiro lead
+              </Button>
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nome</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Telefone</TableHead>
+                  <TableHead>Origem</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Responsável</TableHead>
+                  <TableHead>Data de criação</TableHead>
+                  <TableHead className="w-12"></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredLeads.map((lead) => (
+                  <TableRow key={lead.id}>
+                    <TableCell>
+                      <p className="font-medium">{lead.name}</p>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{lead.email ?? "—"}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{lead.phone ?? "—"}</span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">{lead.source}</span>
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant="secondary">{lead.status.name}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm">
+                        {lead.assignedTo?.name ?? "Não atribuído"}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <span className="text-sm text-muted-foreground">
+                        {format(new Date(lead.createdAt), "dd/MM/yyyy")}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-8 w-8">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => handleEditLead(lead)}>
+                            <Pencil className="mr-2 h-4 w-4" />
+                            Editar
+                          </DropdownMenuItem>
+                          <DropdownMenuItem
+                            className="text-destructive"
+                            onClick={() => handleDeleteLead(lead)}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" />
+                            Excluir
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
+
+      <LeadFormDialog
+        open={formDialogOpen}
+        onOpenChange={setFormDialogOpen}
+        lead={editingLead}
+        onSuccess={handleFormSuccess}
+      />
+
+      {deletingLead && (
+        <DeleteConfirmDialog
+          open={deleteDialogOpen}
+          onOpenChange={setDeleteDialogOpen}
+          leadId={deletingLead.id}
+          leadName={deletingLead.name}
+          onSuccess={handleDeleteSuccess}
+        />
+      )}
     </div>
   )
 }
