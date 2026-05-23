@@ -25,6 +25,7 @@ interface CanvasProps {
   onDeleteWindow: (id: string) => void;
   onAddDoor: (wallId: string, position: number) => void;
   onAddWindow: (wallId: string, position: number) => void;
+  onAddLabel: (x: number, y: number) => void;
   onViewportChange: (vp: Partial<ViewportState>) => void;
   onMeasure: (result: string | null) => void;
   isFullscreen: boolean;
@@ -41,6 +42,7 @@ export function EditorCanvas({
   onDeleteWindow,
   onAddDoor,
   onAddWindow,
+  onAddLabel,
   onViewportChange,
   onMeasure,
   isFullscreen,
@@ -179,15 +181,32 @@ export function EditorCanvas({
       ctx.lineTo(e.x, e.y);
       ctx.stroke();
 
-      // Wall length label
+      // Wall length label (offset away from wall to avoid overlap)
       const len = distance(wall.start, wall.end);
       if (len > 0.3 && zoom > 0.5) {
         const mid = toScreen((wall.start.x + wall.end.x) / 2, (wall.start.y + wall.end.y) / 2);
-        ctx.font = `${Math.max(9, 11 * zoom)}px Inter, sans-serif`;
-        ctx.fillStyle = 'rgba(0,0,0,0.6)';
+        const isHorizontal = Math.abs(wall.start.y - wall.end.y) < 0.05;
+        const fontSize = Math.max(9, 10 * zoom);
+        const offset = Math.max(12, thickness / 2 + 10);
+
+        ctx.font = `${fontSize}px Inter, sans-serif`;
+        ctx.fillStyle = 'rgba(80,80,80,0.8)';
         ctx.textAlign = 'center';
-        ctx.textBaseline = 'bottom';
-        ctx.fillText(`${len.toFixed(2)}m`, mid.x, mid.y - 4);
+
+        if (isHorizontal) {
+          // Label above horizontal wall
+          ctx.textBaseline = 'bottom';
+          ctx.fillText(`${len.toFixed(2)}m`, mid.x, mid.y - offset);
+        } else {
+          // Label left of vertical wall
+          ctx.textBaseline = 'middle';
+          ctx.save();
+          ctx.translate(mid.x - offset, mid.y);
+          ctx.rotate(-Math.PI / 2);
+          ctx.textAlign = 'center';
+          ctx.fillText(`${len.toFixed(2)}m`, 0, 0);
+          ctx.restore();
+        }
       }
     }
 
@@ -307,6 +326,30 @@ export function EditorCanvas({
       ctx.stroke();
 
       ctx.restore();
+    }
+
+    // === Labels (numbered badges) ===
+    for (const label of state.labels) {
+      const pos = toScreen(label.x, label.y);
+      const badgeRadius = Math.max(10, 14 * zoom);
+
+      // Green circle
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, badgeRadius, 0, Math.PI * 2);
+      ctx.fillStyle = '#2d6a4f';
+      ctx.fill();
+      // White shadow
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Number
+      const fontSize = Math.max(9, badgeRadius * 1.0);
+      ctx.font = `bold ${fontSize}px Inter, sans-serif`;
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(String(label.number), pos.x, pos.y);
     }
 
     // === Drawing wall preview ===
@@ -607,6 +650,9 @@ export function EditorCanvas({
           setPlacingOnWall(placement);
         }
       }
+    } else if (activeTool === 'label') {
+      point = snapPointToGrid(point);
+      onAddLabel(point.x, point.y);
     } else if (activeTool === 'measure') {
       point = snapPointToGrid(point);
       if (!measureStart) {
@@ -646,7 +692,7 @@ export function EditorCanvas({
       isPanningRef.current = true;
       lastMouseRef.current = { x: e.clientX, y: e.clientY };
     }
-  }, [activeTool, toMeters, state.walls, state.doors, state.windows, lotWidth, lotLength, onDeleteWall, onDeleteDoor, onDeleteWindow, onAddDoor, onAddWindow, measureStart, onMeasure]);
+  }, [activeTool, toMeters, state.walls, state.doors, state.windows, lotWidth, lotLength, onDeleteWall, onDeleteDoor, onDeleteWindow, onAddDoor, onAddWindow, onAddLabel, measureStart, onMeasure]);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (isPanningRef.current) {
@@ -762,6 +808,7 @@ export function EditorCanvas({
       <div className="absolute top-3 left-3 rounded-md bg-background/90 px-2 py-1 text-xs font-medium shadow-sm border">
         {activeTool === 'wall' && '🖊 Desenhando paredes (clique e arraste)'}
         {activeTool === 'box' && '▢ Arraste para criar cômodo (4 paredes)'}
+        {activeTool === 'label' && '① Clique para numerar o ambiente'}
         {activeTool === 'select' && '↖ Selecionar (arraste para mover)'}
         {activeTool === 'eraser' && '✕ Clique em uma parede para apagar'}
         {activeTool === 'door' && '🚪 Clique em uma parede → deslize → clique para confirmar'}

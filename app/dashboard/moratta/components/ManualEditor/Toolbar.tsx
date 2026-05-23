@@ -20,9 +20,9 @@ const tools: { id: EditorTool; label: string; icon: string; shortcut: string }[]
   { id: 'select', label: 'Selecionar', icon: '↖', shortcut: 'V' },
   { id: 'wall', label: 'Parede', icon: '▬', shortcut: 'W' },
   { id: 'box', label: 'Cômodo', icon: '▢', shortcut: 'B' },
+  { id: 'label', label: 'Nomear', icon: '①', shortcut: 'N' },
   { id: 'door', label: 'Porta', icon: '🚪', shortcut: 'D' },
   { id: 'window', label: 'Janela', icon: '⊞', shortcut: 'J' },
-  { id: 'room', label: 'Ambiente', icon: '⬜', shortcut: 'R' },
   { id: 'measure', label: 'Medir', icon: '📏', shortcut: 'M' },
   { id: 'eraser', label: 'Apagar', icon: '✕', shortcut: 'E' },
 ];

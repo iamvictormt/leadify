@@ -58,6 +58,15 @@ export interface EditorFurniture {
   rotation: number; // degrees
 }
 
+export interface EditorLabel {
+  id: string;
+  number: number;
+  name: string;
+  type: RoomType;
+  x: number; // position in meters
+  y: number;
+}
+
 export type EditorTool =
   | 'select'
   | 'wall'
@@ -65,6 +74,7 @@ export type EditorTool =
   | 'door'
   | 'window'
   | 'room'
+  | 'label'
   | 'furniture'
   | 'measure'
   | 'eraser';
@@ -74,6 +84,7 @@ export interface EditorState {
   doors: EditorDoor[];
   windows: EditorWindow[];
   rooms: EditorRoom[];
+  labels: EditorLabel[];
   furniture: EditorFurniture[];
   lotWidth: number;
   lotLength: number;
