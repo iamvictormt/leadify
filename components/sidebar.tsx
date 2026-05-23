@@ -16,12 +16,14 @@ import {
   Heart,
   FolderOpen,
   User,
+  PencilRuler,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navigation = [
   { name: "Projetos", href: "/dashboard/moratta", icon: Home },
   { name: "Novo Projeto", href: "/dashboard/moratta/novo", icon: Plus },
+  { name: "Editor Manual", href: "/dashboard/moratta/editor", icon: PencilRuler },
   { name: "Clientes", href: "/dashboard/moratta/clientes", icon: UserCircle },
   { name: "Métricas", href: "/dashboard/moratta/metricas", icon: BarChart3 },
   { name: "Favoritos", href: "/dashboard/favoritos", icon: Heart },
