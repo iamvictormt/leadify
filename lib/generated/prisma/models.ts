@@ -8,17 +8,10 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Company'
 export type * from './models/User'
-export type * from './models/LeadStatus'
-export type * from './models/Lead'
-export type * from './models/Conversation'
-export type * from './models/Message'
-export type * from './models/KnowledgeBase'
-export type * from './models/Plan'
-export type * from './models/Subscription'
-export type * from './models/LeadHistory'
-export type * from './models/AiLog'
-export type * from './models/WhatsAppConfig'
-export type * from './models/WhatsAppMessageDedup'
+export type * from './models/SystemSettings'
+export type * from './models/MorattaProfile'
+export type * from './models/MorattaClient'
+export type * from './models/MorattaProject'
+export type * from './models/MorattaVariation'
 export type * from './commonInputTypes'

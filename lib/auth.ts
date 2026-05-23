@@ -1,14 +1,12 @@
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from "node:crypto"
 
-export const SESSION_COOKIE_NAME = "leadify_session"
+export const SESSION_COOKIE_NAME = "moratta_session"
 
 const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7
-const AUTH_SECRET = process.env.AUTH_SECRET ?? "leadify-dev-secret-change-me"
+const AUTH_SECRET = process.env.AUTH_SECRET ?? "moratta-dev-secret-change-me"
 
 type SessionPayload = {
   userId: string
-  companyId: string
-  role: string
   exp: number
 }
 
@@ -82,7 +80,7 @@ export function verifySessionToken(token?: string) {
   try {
     const payload = JSON.parse(fromBase64Url(body)) as SessionPayload
 
-    if (!payload.userId || !payload.companyId || !payload.role || payload.exp < Math.floor(Date.now() / 1000)) {
+    if (!payload.userId || payload.exp < Math.floor(Date.now() / 1000)) {
       return null
     }
 

@@ -9,7 +9,27 @@
 * 🟢 You can import this file directly.
 */
 
+export const UserRole = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+} as const
+
+export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const MorattaProfileType = {
+  PERSONAL: 'PERSONAL',
+  PROFESSIONAL: 'PROFESSIONAL'
+} as const
+
+export type MorattaProfileType = (typeof MorattaProfileType)[keyof typeof MorattaProfileType]
+
+
+export const ProjectStatus = {
+  DRAFT: 'DRAFT',
+  GENERATING: 'GENERATING',
+  READY: 'READY',
+  ERROR: 'ERROR'
+} as const
+
+export type ProjectStatus = (typeof ProjectStatus)[keyof typeof ProjectStatus]

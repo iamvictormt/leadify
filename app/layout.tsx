@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Urbanist } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import { ThemeProvider } from '@/components/theme-provider'
 import './globals.css'
 
 const urbanist = Urbanist({ 
@@ -9,8 +10,8 @@ const urbanist = Urbanist({
 });
 
 export const metadata: Metadata = {
-  title: 'Leadify - CRM com IA para pequenos negócios',
-  description: 'Organize leads, conversas e respostas com IA para vender mais pelo WhatsApp e Instagram',
+  title: 'Moratta - Planejamento Residencial Inteligente',
+  description: 'Transforme ideias em plantas conceituais com IA. Geração automática de plantas baixas, visualização 3D e estimativa de custos para projetos residenciais.',
   icons: {
     icon: [
       {
@@ -36,9 +37,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" className="bg-background">
+    <html lang="pt-BR" className="bg-background" suppressHydrationWarning>
       <body className={`${urbanist.variable} font-sans antialiased`}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

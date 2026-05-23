@@ -51,19 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  Company: 'Company',
   User: 'User',
-  LeadStatus: 'LeadStatus',
-  Lead: 'Lead',
-  Conversation: 'Conversation',
-  Message: 'Message',
-  KnowledgeBase: 'KnowledgeBase',
-  Plan: 'Plan',
-  Subscription: 'Subscription',
-  LeadHistory: 'LeadHistory',
-  AiLog: 'AiLog',
-  WhatsAppConfig: 'WhatsAppConfig',
-  WhatsAppMessageDedup: 'WhatsAppMessageDedup'
+  SystemSettings: 'SystemSettings',
+  MorattaProfile: 'MorattaProfile',
+  MorattaClient: 'MorattaClient',
+  MorattaProject: 'MorattaProject',
+  MorattaVariation: 'MorattaVariation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -82,27 +75,12 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-export const CompanyScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  segment: 'segment',
-  phone: 'phone',
-  email: 'email',
-  document: 'document',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CompanyScalarFieldEnum = (typeof CompanyScalarFieldEnum)[keyof typeof CompanyScalarFieldEnum]
-
-
 export const UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
   passwordHash: 'passwordHash',
   role: 'role',
-  companyId: 'companyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -110,149 +88,68 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const LeadStatusScalarFieldEnum = {
+export const SystemSettingsScalarFieldEnum = {
   id: 'id',
-  companyId: 'companyId',
-  name: 'name',
-  order: 'order',
-  color: 'color',
-  createdAt: 'createdAt',
+  aiProvider: 'aiProvider',
   updatedAt: 'updatedAt'
 } as const
 
-export type LeadStatusScalarFieldEnum = (typeof LeadStatusScalarFieldEnum)[keyof typeof LeadStatusScalarFieldEnum]
+export type SystemSettingsScalarFieldEnum = (typeof SystemSettingsScalarFieldEnum)[keyof typeof SystemSettingsScalarFieldEnum]
 
 
-export const LeadScalarFieldEnum = {
+export const MorattaProfileScalarFieldEnum = {
   id: 'id',
-  companyId: 'companyId',
-  name: 'name',
-  phone: 'phone',
-  email: 'email',
-  source: 'source',
-  statusId: 'statusId',
-  assignedToId: 'assignedToId',
-  notes: 'notes',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type LeadScalarFieldEnum = (typeof LeadScalarFieldEnum)[keyof typeof LeadScalarFieldEnum]
-
-
-export const ConversationScalarFieldEnum = {
-  id: 'id',
-  companyId: 'companyId',
-  leadId: 'leadId',
-  channel: 'channel',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
-
-
-export const MessageScalarFieldEnum = {
-  id: 'id',
-  conversationId: 'conversationId',
-  senderType: 'senderType',
-  content: 'content',
-  aiGenerated: 'aiGenerated',
-  whatsappMsgId: 'whatsappMsgId',
-  status: 'status',
-  sentAt: 'sentAt',
-  createdAt: 'createdAt'
-} as const
-
-export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
-
-
-export const KnowledgeBaseScalarFieldEnum = {
-  id: 'id',
-  companyId: 'companyId',
-  type: 'type',
-  title: 'title',
-  content: 'content',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type KnowledgeBaseScalarFieldEnum = (typeof KnowledgeBaseScalarFieldEnum)[keyof typeof KnowledgeBaseScalarFieldEnum]
-
-
-export const PlanScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  price: 'price',
-  aiLimit: 'aiLimit',
-  leadLimit: 'leadLimit',
-  userLimit: 'userLimit',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type PlanScalarFieldEnum = (typeof PlanScalarFieldEnum)[keyof typeof PlanScalarFieldEnum]
-
-
-export const SubscriptionScalarFieldEnum = {
-  id: 'id',
-  companyId: 'companyId',
-  planId: 'planId',
-  status: 'status',
-  currentPeriodStart: 'currentPeriodStart',
-  currentPeriodEnd: 'currentPeriodEnd',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
-
-
-export const LeadHistoryScalarFieldEnum = {
-  id: 'id',
-  leadId: 'leadId',
-  oldStatus: 'oldStatus',
-  newStatus: 'newStatus',
   userId: 'userId',
-  createdAt: 'createdAt'
-} as const
-
-export type LeadHistoryScalarFieldEnum = (typeof LeadHistoryScalarFieldEnum)[keyof typeof LeadHistoryScalarFieldEnum]
-
-
-export const AiLogScalarFieldEnum = {
-  id: 'id',
-  companyId: 'companyId',
-  messageId: 'messageId',
-  tokens: 'tokens',
-  model: 'model',
-  createdAt: 'createdAt'
-} as const
-
-export type AiLogScalarFieldEnum = (typeof AiLogScalarFieldEnum)[keyof typeof AiLogScalarFieldEnum]
-
-
-export const WhatsAppConfigScalarFieldEnum = {
-  id: 'id',
-  companyId: 'companyId',
-  wabaId: 'wabaId',
-  phoneNumberId: 'phoneNumberId',
-  accessToken: 'accessToken',
+  type: 'type',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
-export type WhatsAppConfigScalarFieldEnum = (typeof WhatsAppConfigScalarFieldEnum)[keyof typeof WhatsAppConfigScalarFieldEnum]
+export type MorattaProfileScalarFieldEnum = (typeof MorattaProfileScalarFieldEnum)[keyof typeof MorattaProfileScalarFieldEnum]
 
 
-export const WhatsAppMessageDedupScalarFieldEnum = {
+export const MorattaClientScalarFieldEnum = {
   id: 'id',
-  whatsappMsgId: 'whatsappMsgId',
-  companyId: 'companyId',
-  receivedAt: 'receivedAt'
+  profileId: 'profileId',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type WhatsAppMessageDedupScalarFieldEnum = (typeof WhatsAppMessageDedupScalarFieldEnum)[keyof typeof WhatsAppMessageDedupScalarFieldEnum]
+export type MorattaClientScalarFieldEnum = (typeof MorattaClientScalarFieldEnum)[keyof typeof MorattaClientScalarFieldEnum]
+
+
+export const MorattaProjectScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  clientId: 'clientId',
+  name: 'name',
+  status: 'status',
+  params: 'params',
+  activeVariation: 'activeVariation',
+  shareToken: 'shareToken',
+  shareEnabled: 'shareEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MorattaProjectScalarFieldEnum = (typeof MorattaProjectScalarFieldEnum)[keyof typeof MorattaProjectScalarFieldEnum]
+
+
+export const MorattaVariationScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  version: 'version',
+  floorPlan: 'floorPlan',
+  estimate: 'estimate',
+  threeDModel: 'threeDModel',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type MorattaVariationScalarFieldEnum = (typeof MorattaVariationScalarFieldEnum)[keyof typeof MorattaVariationScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -261,6 +158,21 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -277,4 +189,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

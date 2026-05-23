@@ -29,8 +29,7 @@ export type UserMinAggregateOutputType = {
   name: string | null
   email: string | null
   passwordHash: string | null
-  role: string | null
-  companyId: string | null
+  role: $Enums.UserRole | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,8 +39,7 @@ export type UserMaxAggregateOutputType = {
   name: string | null
   email: string | null
   passwordHash: string | null
-  role: string | null
-  companyId: string | null
+  role: $Enums.UserRole | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,7 +50,6 @@ export type UserCountAggregateOutputType = {
   email: number
   passwordHash: number
   role: number
-  companyId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,7 +62,6 @@ export type UserMinAggregateInputType = {
   email?: true
   passwordHash?: true
   role?: true
-  companyId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -76,7 +72,6 @@ export type UserMaxAggregateInputType = {
   email?: true
   passwordHash?: true
   role?: true
-  companyId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -87,7 +82,6 @@ export type UserCountAggregateInputType = {
   email?: true
   passwordHash?: true
   role?: true
-  companyId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -170,8 +164,7 @@ export type UserGroupByOutputType = {
   name: string
   email: string
   passwordHash: string
-  role: string
-  companyId: string
+  role: $Enums.UserRole
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -202,13 +195,11 @@ export type UserWhereInput = {
   name?: Prisma.StringFilter<"User"> | string
   email?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.StringFilter<"User"> | string
-  companyId?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
-  leads?: Prisma.LeadListRelationFilter
-  leadHistories?: Prisma.LeadHistoryListRelationFilter
+  morattaProfile?: Prisma.XOR<Prisma.MorattaProfileNullableScalarRelationFilter, Prisma.MorattaProfileWhereInput> | null
+  morattaProjects?: Prisma.MorattaProjectListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -217,12 +208,10 @@ export type UserOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  company?: Prisma.CompanyOrderByWithRelationInput
-  leads?: Prisma.LeadOrderByRelationAggregateInput
-  leadHistories?: Prisma.LeadHistoryOrderByRelationAggregateInput
+  morattaProfile?: Prisma.MorattaProfileOrderByWithRelationInput
+  morattaProjects?: Prisma.MorattaProjectOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -233,13 +222,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   name?: Prisma.StringFilter<"User"> | string
   passwordHash?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.StringFilter<"User"> | string
-  companyId?: Prisma.StringFilter<"User"> | string
+  role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
-  leads?: Prisma.LeadListRelationFilter
-  leadHistories?: Prisma.LeadHistoryListRelationFilter
+  morattaProfile?: Prisma.XOR<Prisma.MorattaProfileNullableScalarRelationFilter, Prisma.MorattaProfileWhereInput> | null
+  morattaProjects?: Prisma.MorattaProjectListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -248,7 +235,6 @@ export type UserOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -264,8 +250,7 @@ export type UserScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"User"> | string
   email?: Prisma.StringWithAggregatesFilter<"User"> | string
   passwordHash?: Prisma.StringWithAggregatesFilter<"User"> | string
-  role?: Prisma.StringWithAggregatesFilter<"User"> | string
-  companyId?: Prisma.StringWithAggregatesFilter<"User"> | string
+  role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -275,12 +260,11 @@ export type UserCreateInput = {
   name: string
   email: string
   passwordHash: string
-  role?: string
+  role?: $Enums.UserRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  company: Prisma.CompanyCreateNestedOneWithoutUsersInput
-  leads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
-  leadHistories?: Prisma.LeadHistoryCreateNestedManyWithoutUserInput
+  morattaProfile?: Prisma.MorattaProfileCreateNestedOneWithoutUserInput
+  morattaProjects?: Prisma.MorattaProjectCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -288,12 +272,11 @@ export type UserUncheckedCreateInput = {
   name: string
   email: string
   passwordHash: string
-  role?: string
-  companyId: string
+  role?: $Enums.UserRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
-  leadHistories?: Prisma.LeadHistoryUncheckedCreateNestedManyWithoutUserInput
+  morattaProfile?: Prisma.MorattaProfileUncheckedCreateNestedOneWithoutUserInput
+  morattaProjects?: Prisma.MorattaProjectUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -301,12 +284,11 @@ export type UserUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
-  leadHistories?: Prisma.LeadHistoryUpdateManyWithoutUserNestedInput
+  morattaProfile?: Prisma.MorattaProfileUpdateOneWithoutUserNestedInput
+  morattaProjects?: Prisma.MorattaProjectUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -314,12 +296,11 @@ export type UserUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
-  leadHistories?: Prisma.LeadHistoryUncheckedUpdateManyWithoutUserNestedInput
+  morattaProfile?: Prisma.MorattaProfileUncheckedUpdateOneWithoutUserNestedInput
+  morattaProjects?: Prisma.MorattaProjectUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -327,8 +308,7 @@ export type UserCreateManyInput = {
   name: string
   email: string
   passwordHash: string
-  role?: string
-  companyId: string
+  role?: $Enums.UserRole
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -338,7 +318,7 @@ export type UserUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -348,20 +328,9 @@ export type UserUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type UserListRelationFilter = {
-  every?: Prisma.UserWhereInput
-  some?: Prisma.UserWhereInput
-  none?: Prisma.UserWhereInput
-}
-
-export type UserOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -370,7 +339,6 @@ export type UserCountOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -381,7 +349,6 @@ export type UserMaxOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -392,14 +359,8 @@ export type UserMinOrderByAggregateInput = {
   email?: Prisma.SortOrder
   passwordHash?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserScalarRelationFilter = {
@@ -407,312 +368,164 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
-export type UserCreateNestedManyWithoutCompanyInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCompanyInput, Prisma.UserUncheckedCreateWithoutCompanyInput> | Prisma.UserCreateWithoutCompanyInput[] | Prisma.UserUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompanyInput | Prisma.UserCreateOrConnectWithoutCompanyInput[]
-  createMany?: Prisma.UserCreateManyCompanyInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+export type StringFieldUpdateOperationsInput = {
+  set?: string
 }
 
-export type UserUncheckedCreateNestedManyWithoutCompanyInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCompanyInput, Prisma.UserUncheckedCreateWithoutCompanyInput> | Prisma.UserCreateWithoutCompanyInput[] | Prisma.UserUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompanyInput | Prisma.UserCreateOrConnectWithoutCompanyInput[]
-  createMany?: Prisma.UserCreateManyCompanyInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
+export type EnumUserRoleFieldUpdateOperationsInput = {
+  set?: $Enums.UserRole
 }
 
-export type UserUpdateManyWithoutCompanyNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCompanyInput, Prisma.UserUncheckedCreateWithoutCompanyInput> | Prisma.UserCreateWithoutCompanyInput[] | Prisma.UserUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompanyInput | Prisma.UserCreateOrConnectWithoutCompanyInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutCompanyInput | Prisma.UserUpsertWithWhereUniqueWithoutCompanyInput[]
-  createMany?: Prisma.UserCreateManyCompanyInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutCompanyInput | Prisma.UserUpdateWithWhereUniqueWithoutCompanyInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutCompanyInput | Prisma.UserUpdateManyWithWhereWithoutCompanyInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
-export type UserUncheckedUpdateManyWithoutCompanyNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutCompanyInput, Prisma.UserUncheckedCreateWithoutCompanyInput> | Prisma.UserCreateWithoutCompanyInput[] | Prisma.UserUncheckedCreateWithoutCompanyInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCompanyInput | Prisma.UserCreateOrConnectWithoutCompanyInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutCompanyInput | Prisma.UserUpsertWithWhereUniqueWithoutCompanyInput[]
-  createMany?: Prisma.UserCreateManyCompanyInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutCompanyInput | Prisma.UserUpdateWithWhereUniqueWithoutCompanyInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutCompanyInput | Prisma.UserUpdateManyWithWhereWithoutCompanyInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-}
-
-export type UserCreateNestedOneWithoutLeadsInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsInput, Prisma.UserUncheckedCreateWithoutLeadsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsInput
+export type UserCreateNestedOneWithoutMorattaProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMorattaProfileInput, Prisma.UserUncheckedCreateWithoutMorattaProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMorattaProfileInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneWithoutLeadsNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadsInput, Prisma.UserUncheckedCreateWithoutLeadsInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadsInput
-  upsert?: Prisma.UserUpsertWithoutLeadsInput
-  disconnect?: Prisma.UserWhereInput | boolean
-  delete?: Prisma.UserWhereInput | boolean
+export type UserUpdateOneRequiredWithoutMorattaProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMorattaProfileInput, Prisma.UserUncheckedCreateWithoutMorattaProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMorattaProfileInput
+  upsert?: Prisma.UserUpsertWithoutMorattaProfileInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadsInput, Prisma.UserUpdateWithoutLeadsInput>, Prisma.UserUncheckedUpdateWithoutLeadsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMorattaProfileInput, Prisma.UserUpdateWithoutMorattaProfileInput>, Prisma.UserUncheckedUpdateWithoutMorattaProfileInput>
 }
 
-export type UserCreateNestedOneWithoutLeadHistoriesInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadHistoriesInput
+export type UserCreateNestedOneWithoutMorattaProjectsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMorattaProjectsInput, Prisma.UserUncheckedCreateWithoutMorattaProjectsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMorattaProjectsInput
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserUpdateOneRequiredWithoutLeadHistoriesNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutLeadHistoriesInput
-  upsert?: Prisma.UserUpsertWithoutLeadHistoriesInput
+export type UserUpdateOneRequiredWithoutMorattaProjectsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutMorattaProjectsInput, Prisma.UserUncheckedCreateWithoutMorattaProjectsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutMorattaProjectsInput
+  upsert?: Prisma.UserUpsertWithoutMorattaProjectsInput
   connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutLeadHistoriesInput, Prisma.UserUpdateWithoutLeadHistoriesInput>, Prisma.UserUncheckedUpdateWithoutLeadHistoriesInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutMorattaProjectsInput, Prisma.UserUpdateWithoutMorattaProjectsInput>, Prisma.UserUncheckedUpdateWithoutMorattaProjectsInput>
 }
 
-export type UserCreateWithoutCompanyInput = {
+export type UserCreateWithoutMorattaProfileInput = {
   id?: string
   name: string
   email: string
   passwordHash: string
-  role?: string
+  role?: $Enums.UserRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
-  leadHistories?: Prisma.LeadHistoryCreateNestedManyWithoutUserInput
+  morattaProjects?: Prisma.MorattaProjectCreateNestedManyWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutCompanyInput = {
+export type UserUncheckedCreateWithoutMorattaProfileInput = {
   id?: string
   name: string
   email: string
   passwordHash: string
-  role?: string
+  role?: $Enums.UserRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
-  leadHistories?: Prisma.LeadHistoryUncheckedCreateNestedManyWithoutUserInput
+  morattaProjects?: Prisma.MorattaProjectUncheckedCreateNestedManyWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutCompanyInput = {
+export type UserCreateOrConnectWithoutMorattaProfileInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutCompanyInput, Prisma.UserUncheckedCreateWithoutCompanyInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMorattaProfileInput, Prisma.UserUncheckedCreateWithoutMorattaProfileInput>
 }
 
-export type UserCreateManyCompanyInputEnvelope = {
-  data: Prisma.UserCreateManyCompanyInput | Prisma.UserCreateManyCompanyInput[]
-  skipDuplicates?: boolean
-}
-
-export type UserUpsertWithWhereUniqueWithoutCompanyInput = {
-  where: Prisma.UserWhereUniqueInput
-  update: Prisma.XOR<Prisma.UserUpdateWithoutCompanyInput, Prisma.UserUncheckedUpdateWithoutCompanyInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutCompanyInput, Prisma.UserUncheckedCreateWithoutCompanyInput>
-}
-
-export type UserUpdateWithWhereUniqueWithoutCompanyInput = {
-  where: Prisma.UserWhereUniqueInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutCompanyInput, Prisma.UserUncheckedUpdateWithoutCompanyInput>
-}
-
-export type UserUpdateManyWithWhereWithoutCompanyInput = {
-  where: Prisma.UserScalarWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutCompanyInput>
-}
-
-export type UserScalarWhereInput = {
-  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  OR?: Prisma.UserScalarWhereInput[]
-  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  id?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-  passwordHash?: Prisma.StringFilter<"User"> | string
-  role?: Prisma.StringFilter<"User"> | string
-  companyId?: Prisma.StringFilter<"User"> | string
-  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-}
-
-export type UserCreateWithoutLeadsInput = {
-  id?: string
-  name: string
-  email: string
-  passwordHash: string
-  role?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  company: Prisma.CompanyCreateNestedOneWithoutUsersInput
-  leadHistories?: Prisma.LeadHistoryCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutLeadsInput = {
-  id?: string
-  name: string
-  email: string
-  passwordHash: string
-  role?: string
-  companyId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  leadHistories?: Prisma.LeadHistoryUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutLeadsInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsInput, Prisma.UserUncheckedCreateWithoutLeadsInput>
-}
-
-export type UserUpsertWithoutLeadsInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutLeadsInput, Prisma.UserUncheckedUpdateWithoutLeadsInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutLeadsInput, Prisma.UserUncheckedCreateWithoutLeadsInput>
+export type UserUpsertWithoutMorattaProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMorattaProfileInput, Prisma.UserUncheckedUpdateWithoutMorattaProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMorattaProfileInput, Prisma.UserUncheckedCreateWithoutMorattaProfileInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutLeadsInput = {
+export type UserUpdateToOneWithWhereWithoutMorattaProfileInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutLeadsInput, Prisma.UserUncheckedUpdateWithoutLeadsInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMorattaProfileInput, Prisma.UserUncheckedUpdateWithoutMorattaProfileInput>
 }
 
-export type UserUpdateWithoutLeadsInput = {
+export type UserUpdateWithoutMorattaProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
-  leadHistories?: Prisma.LeadHistoryUpdateManyWithoutUserNestedInput
+  morattaProjects?: Prisma.MorattaProjectUpdateManyWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutLeadsInput = {
+export type UserUncheckedUpdateWithoutMorattaProfileInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leadHistories?: Prisma.LeadHistoryUncheckedUpdateManyWithoutUserNestedInput
+  morattaProjects?: Prisma.MorattaProjectUncheckedUpdateManyWithoutUserNestedInput
 }
 
-export type UserCreateWithoutLeadHistoriesInput = {
+export type UserCreateWithoutMorattaProjectsInput = {
   id?: string
   name: string
   email: string
   passwordHash: string
-  role?: string
+  role?: $Enums.UserRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  company: Prisma.CompanyCreateNestedOneWithoutUsersInput
-  leads?: Prisma.LeadCreateNestedManyWithoutAssignedToInput
+  morattaProfile?: Prisma.MorattaProfileCreateNestedOneWithoutUserInput
 }
 
-export type UserUncheckedCreateWithoutLeadHistoriesInput = {
+export type UserUncheckedCreateWithoutMorattaProjectsInput = {
   id?: string
   name: string
   email: string
   passwordHash: string
-  role?: string
-  companyId: string
+  role?: $Enums.UserRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  leads?: Prisma.LeadUncheckedCreateNestedManyWithoutAssignedToInput
+  morattaProfile?: Prisma.MorattaProfileUncheckedCreateNestedOneWithoutUserInput
 }
 
-export type UserCreateOrConnectWithoutLeadHistoriesInput = {
+export type UserCreateOrConnectWithoutMorattaProjectsInput = {
   where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMorattaProjectsInput, Prisma.UserUncheckedCreateWithoutMorattaProjectsInput>
 }
 
-export type UserUpsertWithoutLeadHistoriesInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutLeadHistoriesInput, Prisma.UserUncheckedUpdateWithoutLeadHistoriesInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutLeadHistoriesInput, Prisma.UserUncheckedCreateWithoutLeadHistoriesInput>
+export type UserUpsertWithoutMorattaProjectsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutMorattaProjectsInput, Prisma.UserUncheckedUpdateWithoutMorattaProjectsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutMorattaProjectsInput, Prisma.UserUncheckedCreateWithoutMorattaProjectsInput>
   where?: Prisma.UserWhereInput
 }
 
-export type UserUpdateToOneWithWhereWithoutLeadHistoriesInput = {
+export type UserUpdateToOneWithWhereWithoutMorattaProjectsInput = {
   where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutLeadHistoriesInput, Prisma.UserUncheckedUpdateWithoutLeadHistoriesInput>
+  data: Prisma.XOR<Prisma.UserUpdateWithoutMorattaProjectsInput, Prisma.UserUncheckedUpdateWithoutMorattaProjectsInput>
 }
 
-export type UserUpdateWithoutLeadHistoriesInput = {
+export type UserUpdateWithoutMorattaProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
-  leads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
+  morattaProfile?: Prisma.MorattaProfileUpdateOneWithoutUserNestedInput
 }
 
-export type UserUncheckedUpdateWithoutLeadHistoriesInput = {
+export type UserUncheckedUpdateWithoutMorattaProjectsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
-}
-
-export type UserCreateManyCompanyInput = {
-  id?: string
-  name: string
-  email: string
-  passwordHash: string
-  role?: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type UserUpdateWithoutCompanyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUpdateManyWithoutAssignedToNestedInput
-  leadHistories?: Prisma.LeadHistoryUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutCompanyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leads?: Prisma.LeadUncheckedUpdateManyWithoutAssignedToNestedInput
-  leadHistories?: Prisma.LeadHistoryUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateManyWithoutCompanyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  morattaProfile?: Prisma.MorattaProfileUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -721,13 +534,11 @@ export type UserUncheckedUpdateManyWithoutCompanyInput = {
  */
 
 export type UserCountOutputType = {
-  leads: number
-  leadHistories: number
+  morattaProjects: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  leads?: boolean | UserCountOutputTypeCountLeadsArgs
-  leadHistories?: boolean | UserCountOutputTypeCountLeadHistoriesArgs
+  morattaProjects?: boolean | UserCountOutputTypeCountMorattaProjectsArgs
 }
 
 /**
@@ -743,15 +554,8 @@ export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * UserCountOutputType without action
  */
-export type UserCountOutputTypeCountLeadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadWhereInput
-}
-
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountLeadHistoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.LeadHistoryWhereInput
+export type UserCountOutputTypeCountMorattaProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.MorattaProjectWhereInput
 }
 
 
@@ -761,12 +565,10 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   email?: boolean
   passwordHash?: boolean
   role?: boolean
-  companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
-  leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
-  leadHistories?: boolean | Prisma.User$leadHistoriesArgs<ExtArgs>
+  morattaProfile?: boolean | Prisma.User$morattaProfileArgs<ExtArgs>
+  morattaProjects?: boolean | Prisma.User$morattaProjectsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -776,10 +578,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   passwordHash?: boolean
   role?: boolean
-  companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -788,10 +588,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   email?: boolean
   passwordHash?: boolean
   role?: boolean
-  companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -800,39 +598,31 @@ export type UserSelectScalar = {
   email?: boolean
   passwordHash?: boolean
   role?: boolean
-  companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "passwordHash" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
-  leads?: boolean | Prisma.User$leadsArgs<ExtArgs>
-  leadHistories?: boolean | Prisma.User$leadHistoriesArgs<ExtArgs>
+  morattaProfile?: boolean | Prisma.User$morattaProfileArgs<ExtArgs>
+  morattaProjects?: boolean | Prisma.User$morattaProjectsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
-}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
-}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    company: Prisma.$CompanyPayload<ExtArgs>
-    leads: Prisma.$LeadPayload<ExtArgs>[]
-    leadHistories: Prisma.$LeadHistoryPayload<ExtArgs>[]
+    morattaProfile: Prisma.$MorattaProfilePayload<ExtArgs> | null
+    morattaProjects: Prisma.$MorattaProjectPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
     email: string
     passwordHash: string
-    role: string
-    companyId: string
+    role: $Enums.UserRole
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1229,9 +1019,8 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  company<T extends Prisma.CompanyDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CompanyDefaultArgs<ExtArgs>>): Prisma.Prisma__CompanyClient<runtime.Types.Result.GetResult<Prisma.$CompanyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  leads<T extends Prisma.User$leadsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  leadHistories<T extends Prisma.User$leadHistoriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$leadHistoriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeadHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  morattaProfile<T extends Prisma.User$morattaProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$morattaProfileArgs<ExtArgs>>): Prisma.Prisma__MorattaProfileClient<runtime.Types.Result.GetResult<Prisma.$MorattaProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  morattaProjects<T extends Prisma.User$morattaProjectsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$morattaProjectsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MorattaProjectPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1265,8 +1054,7 @@ export interface UserFieldRefs {
   readonly name: Prisma.FieldRef<"User", 'String'>
   readonly email: Prisma.FieldRef<"User", 'String'>
   readonly passwordHash: Prisma.FieldRef<"User", 'String'>
-  readonly role: Prisma.FieldRef<"User", 'String'>
-  readonly companyId: Prisma.FieldRef<"User", 'String'>
+  readonly role: Prisma.FieldRef<"User", 'UserRole'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1523,10 +1311,6 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1597,10 +1381,6 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1670,51 +1450,46 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * User.leads
+ * User.morattaProfile
  */
-export type User$leadsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$morattaProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Lead
+   * Select specific fields to fetch from the MorattaProfile
    */
-  select?: Prisma.LeadSelect<ExtArgs> | null
+  select?: Prisma.MorattaProfileSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Lead
+   * Omit specific fields from the MorattaProfile
    */
-  omit?: Prisma.LeadOmit<ExtArgs> | null
+  omit?: Prisma.MorattaProfileOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LeadInclude<ExtArgs> | null
-  where?: Prisma.LeadWhereInput
-  orderBy?: Prisma.LeadOrderByWithRelationInput | Prisma.LeadOrderByWithRelationInput[]
-  cursor?: Prisma.LeadWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.LeadScalarFieldEnum | Prisma.LeadScalarFieldEnum[]
+  include?: Prisma.MorattaProfileInclude<ExtArgs> | null
+  where?: Prisma.MorattaProfileWhereInput
 }
 
 /**
- * User.leadHistories
+ * User.morattaProjects
  */
-export type User$leadHistoriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$morattaProjectsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the LeadHistory
+   * Select specific fields to fetch from the MorattaProject
    */
-  select?: Prisma.LeadHistorySelect<ExtArgs> | null
+  select?: Prisma.MorattaProjectSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the LeadHistory
+   * Omit specific fields from the MorattaProject
    */
-  omit?: Prisma.LeadHistoryOmit<ExtArgs> | null
+  omit?: Prisma.MorattaProjectOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.LeadHistoryInclude<ExtArgs> | null
-  where?: Prisma.LeadHistoryWhereInput
-  orderBy?: Prisma.LeadHistoryOrderByWithRelationInput | Prisma.LeadHistoryOrderByWithRelationInput[]
-  cursor?: Prisma.LeadHistoryWhereUniqueInput
+  include?: Prisma.MorattaProjectInclude<ExtArgs> | null
+  where?: Prisma.MorattaProjectWhereInput
+  orderBy?: Prisma.MorattaProjectOrderByWithRelationInput | Prisma.MorattaProjectOrderByWithRelationInput[]
+  cursor?: Prisma.MorattaProjectWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.LeadHistoryScalarFieldEnum | Prisma.LeadHistoryScalarFieldEnum[]
+  distinct?: Prisma.MorattaProjectScalarFieldEnum | Prisma.MorattaProjectScalarFieldEnum[]
 }
 
 /**

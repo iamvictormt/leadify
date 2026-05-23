@@ -1,15 +1,20 @@
 import { NextResponse } from "next/server"
 import { z } from "zod"
 
-import { createSessionToken, SESSION_COOKIE_NAME, sessionCookieOptions, verifyPassword } from "@/lib/auth"
-import { toAuthResponse } from "@/lib/auth-response"
+import {
+  createSessionToken,
+  verifyPassword,
+  SESSION_COOKIE_NAME,
+  sessionCookieOptions,
+} from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { checkRateLimit } from "@/lib/moratta/middleware"
 
 export const dynamic = "force-dynamic"
 export const runtime = "nodejs"
 
 const loginSchema = z.object({
-  email: z.string().trim().email("Email inválido"),
+  email: z.string().trim().email("E-mail inválido"),
   password: z.string().min(1, "Senha é obrigatória"),
 })
 
@@ -19,25 +24,55 @@ export async function POST(request: Request) {
 
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Dados inválidos", issues: parsed.error.flatten().fieldErrors },
+      { error: "E-mail e senha são obrigatórios." },
       { status: 400 },
     )
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email: parsed.data.email.toLowerCase() },
-    include: { company: true },
-  })
+  const { email, password } = parsed.data
+  const normalizedEmail = email.toLowerCase()
 
-  if (!user || !verifyPassword(parsed.data.password, user.passwordHash)) {
-    return NextResponse.json({ error: "Email ou senha inválidos" }, { status: 401 })
+  // Rate limit check
+  const rateLimit = checkRateLimit(normalizedEmail)
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      { error: "Muitas tentativas. Tente novamente em 15 minutos." },
+      { status: 429 },
+    )
   }
 
-  const response = NextResponse.json(toAuthResponse(user))
+  const user = await prisma.user.findUnique({
+    where: { email: normalizedEmail },
+  })
+
+  if (!user) {
+    return NextResponse.json(
+      { error: "E-mail ou senha incorretos." },
+      { status: 401 },
+    )
+  }
+
+  const isValid = verifyPassword(password, user.passwordHash)
+
+  if (!isValid) {
+    return NextResponse.json(
+      { error: "E-mail ou senha incorretos." },
+      { status: 401 },
+    )
+  }
+
+  const response = NextResponse.json({
+    success: true,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    },
+  })
 
   response.cookies.set(
     SESSION_COOKIE_NAME,
-    createSessionToken({ userId: user.id, companyId: user.companyId, role: user.role }),
+    createSessionToken({ userId: user.id }),
     sessionCookieOptions,
   )
 

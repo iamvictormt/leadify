@@ -54,10 +54,6 @@ export function Header({ onMenuClick, sidebarCollapsed }: HeaderProps) {
             3
           </span>
         </Button>
-        <Button className="hidden gap-2 bg-foreground text-background hover:bg-foreground/90 sm:flex">
-          <Plus className="h-4 w-4" />
-          <span className="hidden md:inline">Novo Lead</span>
-        </Button>
         <Button size="icon" className="bg-foreground text-background hover:bg-foreground/90 sm:hidden">
           <Plus className="h-4 w-4" />
         </Button>

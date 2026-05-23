@@ -7,181 +7,97 @@ datasource db {
   provider = "postgresql"
 }
 
-model Company {
-  id             String          @id @default(uuid())
-  name           String
-  segment        String
-  phone          String?
-  email          String?
-  document       String?
-  users          User[]
-  leads          Lead[]
-  statuses       LeadStatus[]
-  conversations  Conversation[]
-  knowledgeBase  KnowledgeBase[]
-  subscriptions  Subscription[]
-  aiLogs         AiLog[]
-  whatsappConfig WhatsAppConfig?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+enum UserRole {
+  USER
+  ADMIN
 }
 
 model User {
-  id            String        @id @default(uuid())
-  name          String
-  email         String        @unique
-  passwordHash  String
-  role          String        @default("ADMIN")
-  companyId     String
-  company       Company       @relation(fields: [companyId], references: [id])
-  leads         Lead[]
-  leadHistories LeadHistory[]
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-
-  @@index([companyId])
+  id              String           @id @default(uuid())
+  name            String
+  email           String           @unique
+  passwordHash    String
+  role            UserRole         @default(USER)
+  morattaProfile  MorattaProfile?
+  morattaProjects MorattaProject[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
-model LeadStatus {
-  id        String   @id @default(uuid())
-  companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
+model SystemSettings {
+  id        String   @id @default("singleton")
+  aiProvider String  @default("gemini") // "gemini" | "groq"
+  updatedAt DateTime @updatedAt
+}
+
+enum MorattaProfileType {
+  PERSONAL
+  PROFESSIONAL
+}
+
+enum ProjectStatus {
+  DRAFT
+  GENERATING
+  READY
+  ERROR
+}
+
+model MorattaProfile {
+  id        String             @id @default(uuid())
+  userId    String             @unique
+  user      User               @relation(fields: [userId], references: [id])
+  type      MorattaProfileType @default(PERSONAL)
+  clients   MorattaClient[]
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+}
+
+model MorattaClient {
+  id        String           @id @default(uuid())
+  profileId String
+  profile   MorattaProfile   @relation(fields: [profileId], references: [id])
   name      String
-  order     Int
-  color     String?
-  leads     Lead[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  email     String?
+  phone     String?
+  projects  MorattaProject[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@index([profileId])
 }
 
-model Lead {
-  id            String         @id @default(uuid())
-  companyId     String
-  company       Company        @relation(fields: [companyId], references: [id])
-  name          String
-  phone         String?
-  email         String?
-  source        String         @default("MANUAL")
-  statusId      String
-  status        LeadStatus     @relation(fields: [statusId], references: [id])
-  assignedToId  String?
-  assignedTo    User?          @relation(fields: [assignedToId], references: [id])
-  notes         String?
-  conversations Conversation[]
-  history       LeadHistory[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+model MorattaProject {
+  id              String             @id @default(uuid())
+  userId          String
+  user            User               @relation(fields: [userId], references: [id])
+  clientId        String?
+  client          MorattaClient?     @relation(fields: [clientId], references: [id])
+  name            String
+  status          ProjectStatus      @default(DRAFT)
+  params          Json
+  variations      MorattaVariation[]
+  activeVariation String?
+  shareToken      String?            @unique
+  shareEnabled    Boolean            @default(false)
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([userId])
+  @@index([clientId])
+  @@index([shareToken])
 }
 
-model Conversation {
-  id        String    @id @default(uuid())
-  companyId String
-  company   Company   @relation(fields: [companyId], references: [id])
-  leadId    String
-  lead      Lead      @relation(fields: [leadId], references: [id])
-  channel   String    @default("MANUAL")
-  messages  Message[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
+model MorattaVariation {
+  id          String         @id @default(uuid())
+  projectId   String
+  project     MorattaProject @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  version     Int
+  floorPlan   Json
+  estimate    Json?
+  threeDModel Json?
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
 
-model Message {
-  id             String       @id @default(uuid())
-  conversationId String
-  conversation   Conversation @relation(fields: [conversationId], references: [id])
-  senderType     String
-  content        String
-  aiGenerated    Boolean      @default(false)
-  whatsappMsgId  String?
-  status         String       @default("sent")
-  sentAt         DateTime?
-  createdAt      DateTime     @default(now())
-
-  @@index([whatsappMsgId])
-}
-
-model KnowledgeBase {
-  id        String   @id @default(uuid())
-  companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
-  type      String
-  title     String
-  content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([companyId, type])
-}
-
-model Plan {
-  id            String         @id @default(uuid())
-  name          String
-  price         Int
-  aiLimit       Int
-  leadLimit     Int?
-  userLimit     Int?
-  subscriptions Subscription[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-}
-
-model Subscription {
-  id                 String    @id @default(uuid())
-  companyId          String
-  company            Company   @relation(fields: [companyId], references: [id])
-  planId             String
-  plan               Plan      @relation(fields: [planId], references: [id])
-  status             String
-  currentPeriodStart DateTime?
-  currentPeriodEnd   DateTime?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-}
-
-model LeadHistory {
-  id        String   @id @default(uuid())
-  leadId    String
-  lead      Lead     @relation(fields: [leadId], references: [id], onDelete: Cascade)
-  oldStatus String?
-  newStatus String
-  userId    String
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-
-  @@index([leadId])
-}
-
-model AiLog {
-  id        String   @id @default(uuid())
-  companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
-  messageId String?
-  tokens    Int
-  model     String
-  createdAt DateTime @default(now())
-
-  @@index([companyId])
-}
-
-model WhatsAppConfig {
-  id            String   @id @default(uuid())
-  companyId     String   @unique
-  company       Company  @relation(fields: [companyId], references: [id])
-  wabaId        String   @unique
-  phoneNumberId String
-  accessToken   String
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-
-  @@index([wabaId])
-}
-
-model WhatsAppMessageDedup {
-  id            String   @id @default(uuid())
-  whatsappMsgId String   @unique
-  companyId     String
-  receivedAt    DateTime @default(now())
-
-  @@index([whatsappMsgId])
-  @@index([receivedAt])
+  @@unique([projectId, version])
+  @@index([projectId])
 }

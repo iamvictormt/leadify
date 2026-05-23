@@ -42,11 +42,7 @@ export default function LoginPage() {
         return
       }
 
-      const knowledgeBaseResponse = await fetch("/api/knowledge-base")
-      const knowledgeBaseData = await knowledgeBaseResponse.json().catch(() => null)
-      const hasKnowledgeBase = Boolean(knowledgeBaseData?.items?.length)
-
-      router.push(hasKnowledgeBase ? "/dashboard" : "/dashboard/ia/configuracao")
+      router.push("/dashboard/moratta")
       router.refresh()
     } catch {
       setError("Não foi possível conectar ao servidor.")
@@ -61,13 +57,13 @@ export default function LoginPage() {
         <div className="w-full max-w-md">
           <Link href="/" className="mb-10 flex items-center gap-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-md bg-foreground">
-              <span className="text-lg font-bold text-background">L</span>
+              <span className="text-lg font-bold text-background">M</span>
             </div>
-            <span className="text-xl font-bold">Leadify</span>
+            <span className="text-xl font-bold">Moratta</span>
           </Link>
 
-          <h1 className="text-3xl font-bold tracking-tight">Entrar</h1>
-          <p className="mt-2 text-muted-foreground">Acesse sua empresa e continue gerenciando seus leads.</p>
+          <h1 className="text-3xl font-bold tracking-tight">Entrar no Moratta</h1>
+          <p className="mt-2 text-muted-foreground">Acesse seus projetos e continue planejando.</p>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             <div className="space-y-2">
@@ -112,10 +108,6 @@ export default function LoginPage() {
               {isLoading ? "Entrando..." : "Entrar"}
               {!isLoading && <ArrowRight className="h-4 w-4" />}
             </Button>
-
-            <Button type="button" variant="outline" className="h-12 w-full" disabled>
-              Google (futuro)
-            </Button>
           </form>
 
           <p className="mt-8 text-center text-sm text-muted-foreground">
@@ -130,20 +122,20 @@ export default function LoginPage() {
       <aside className="hidden bg-foreground px-10 py-12 text-background lg:flex lg:flex-col lg:justify-between">
         <Link href="/" className="flex items-center gap-2">
           <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary">
-            <span className="text-lg font-bold text-primary-foreground">L</span>
+            <span className="text-lg font-bold text-primary-foreground">M</span>
           </div>
-          <span className="text-xl font-bold">Leadify</span>
+          <span className="text-xl font-bold">Moratta</span>
         </Link>
 
         <div className="max-w-md">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-background/60">CRM com IA</p>
-          <h2 className="mt-4 text-4xl font-bold tracking-tight">Seu funil, seus leads e sua empresa no mesmo lugar.</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-background/60">Planejamento Inteligente</p>
+          <h2 className="mt-4 text-4xl font-bold tracking-tight">Seus projetos residenciais em um só lugar.</h2>
           <p className="mt-4 text-lg leading-8 text-background/70">
-            Cada usuário acessa os dados vinculados à própria empresa, mantendo a operação organizada para crescer com segurança.
+            Gere plantas conceituais com IA, visualize em 3D e estime custos antes de começar a obra.
           </p>
         </div>
 
-        <p className="text-sm text-background/50">Leadify CRM</p>
+        <p className="text-sm text-background/50">Moratta</p>
       </aside>
     </div>
   )

@@ -4,63 +4,80 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import {
   ArrowRight,
-  BarChart3,
   Brain,
   Check,
-  Clock3,
-  KanbanSquare,
+  Cuboid,
+  PencilRuler,
+  Calculator,
   Menu,
-  MessageSquare,
-  ShieldCheck,
-  Sparkles,
-  Users,
   X,
+  Sparkles,
+  Home,
+  Layers,
+  Zap,
 } from "lucide-react"
-
 import { Button } from "@/components/ui/button"
 
 const navItems = [
+  { id: "como-funciona", label: "Como funciona" },
   { id: "recursos", label: "Recursos" },
-  { id: "precos", label: "Preços" },
-  { id: "sobre", label: "Sobre" },
+  { id: "planos", label: "Planos" },
 ]
 
 const features = [
   {
-    icon: Users,
-    title: "Leads sempre organizados",
-    description:
-      "Centralize novos contatos, origem, estágio do funil e histórico de atendimento em uma visão simples de acompanhar.",
-  },
-  {
-    icon: MessageSquare,
-    title: "Conversas com contexto",
-    description:
-      "Registre interações de WhatsApp e Instagram para retomar cada atendimento sem perder detalhes importantes.",
-  },
-  {
     icon: Brain,
-    title: "IA treinada pelo seu negócio",
+    title: "Geração por IA",
     description:
-      "Crie respostas com base nos seus serviços, horários, objeções frequentes e tom de atendimento.",
+      "Informe terreno, quartos e estilo — a IA distribui ambientes, posiciona paredes e entrega uma planta pronta para editar.",
   },
   {
-    icon: KanbanSquare,
-    title: "Funil visual de vendas",
+    icon: PencilRuler,
+    title: "Editor Visual 2D",
     description:
-      "Mova oportunidades entre etapas, priorize os próximos contatos e veja onde cada negociação está parada.",
+      "Arraste paredes, adicione cômodos e ajuste dimensões com snap de 10 cm. Cada edição recalcula áreas em tempo real.",
   },
   {
-    icon: BarChart3,
-    title: "Indicadores em tempo real",
+    icon: Cuboid,
+    title: "Visualização 3D",
     description:
-      "Acompanhe leads recebidos, conversões, motivos de perda e desempenho da equipe sem planilhas paralelas.",
+      "Navegue pelo interior da casa em primeira pessoa. Veja fachada, telhado e aberturas antes de gastar com obra.",
   },
   {
-    icon: ShieldCheck,
-    title: "Rotina simples para a equipe",
+    icon: Calculator,
+    title: "Estimativa de Custos",
     description:
-      "Permissões, tarefas e lembretes ajudam o time a manter o mesmo padrão de atendimento todos os dias.",
+      "Materiais, cronograma e custo total atualizados a cada alteração. Sugestões automáticas quando o orçamento estoura.",
+  },
+  {
+    icon: Layers,
+    title: "Variações Comparáveis",
+    description:
+      "Gere até 3 versões da mesma casa e compare lado a lado para escolher a distribuição ideal.",
+  },
+  {
+    icon: Zap,
+    title: "Compartilhamento Profissional",
+    description:
+      "Envie um link de visualização para seu cliente — sem cadastro, sem complicação.",
+  },
+]
+
+const steps = [
+  {
+    number: "01",
+    title: "Descreva o projeto",
+    description: "Informe terreno, número de quartos, banheiros, estilo e orçamento em um formulário simples.",
+  },
+  {
+    number: "02",
+    title: "IA gera a planta",
+    description: "Em segundos, receba uma planta conceitual com ambientes distribuídos, portas e janelas posicionadas.",
+  },
+  {
+    number: "03",
+    title: "Edite e visualize",
+    description: "Ajuste no editor 2D, explore em 3D e acompanhe custos atualizados em tempo real.",
   },
 ]
 
@@ -68,33 +85,57 @@ const plans = [
   {
     name: "Grátis",
     price: "R$ 0",
-    description: "Para começar a organizar seus primeiros contatos.",
-    features: ["50 leads ativos", "100 respostas com IA/mês", "1 usuário", "Kanban básico"],
+    period: "",
+    description: "Para explorar e testar a plataforma.",
+    features: [
+      "1 projeto ativo",
+      "1 variação por projeto",
+      "Visualização 2D",
+      "Estimativa básica de custo",
+    ],
     cta: "Começar grátis",
     highlighted: false,
   },
   {
-    name: "Start",
-    price: "R$ 49",
-    description: "Para pequenos negócios que já vendem todos os dias.",
-    features: ["500 leads ativos", "500 respostas com IA/mês", "3 usuários", "Kanban completo", "Relatórios básicos"],
-    cta: "Assinar Start",
+    name: "Pessoal",
+    price: "R$ 29",
+    period: "/mês",
+    description: "Para quem está planejando a própria casa.",
+    features: [
+      "5 projetos ativos",
+      "3 variações por projeto",
+      "Visualização 2D + 3D",
+      "Estimativa completa com materiais",
+      "Cronograma de obra",
+      "Sugestões de economia",
+    ],
+    cta: "Assinar Pessoal",
     highlighted: true,
   },
   {
-    name: "Pro",
-    price: "R$ 99",
-    description: "Para operações que precisam de mais escala e controle.",
-    features: ["Leads ilimitados", "2.000 respostas com IA/mês", "10 usuários", "Relatórios avançados", "Suporte prioritário"],
-    cta: "Assinar Pro",
+    name: "Profissional",
+    price: "R$ 79",
+    period: "/mês",
+    description: "Para arquitetos e construtores que atendem clientes.",
+    features: [
+      "Projetos ilimitados",
+      "3 variações por projeto",
+      "Visualização 2D + 3D",
+      "Estimativa completa com materiais",
+      "Gestão de clientes",
+      "Compartilhamento por link",
+      "Painel de métricas",
+      "Suporte prioritário",
+    ],
+    cta: "Assinar Profissional",
     highlighted: false,
   },
 ]
 
 const stats = [
-  { label: "leads organizados", value: "+120 mil" },
-  { label: "respostas geradas por IA", value: "+1 milhão" },
-  { label: "menos tempo em tarefas manuais", value: "8h/semana" },
+  { value: "< 2 min", label: "para gerar uma planta" },
+  { value: "10 cm", label: "precisão no editor" },
+  { value: "24 fps", label: "navegação 3D fluida" },
 ]
 
 export default function HomePage() {
@@ -105,62 +146,44 @@ export default function HomePage() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
-
       const scrollPosition = window.scrollY + 120
-
       for (const section of navItems) {
         const element = document.getElementById(section.id)
-
         if (!element) continue
-
-        const offsetTop = element.offsetTop
-        const offsetHeight = element.offsetHeight
-
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+        if (scrollPosition >= element.offsetTop && scrollPosition < element.offsetTop + element.offsetHeight) {
           setActiveSection(section.id)
           return
         }
       }
-
       setActiveSection("")
     }
-
     handleScroll()
     window.addEventListener("scroll", handleScroll)
-
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
-
     if (element) {
-      const headerOffset = 88
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.scrollY - headerOffset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
+      window.scrollTo({ top: element.offsetTop - 88, behavior: "smooth" })
     }
-
     setIsMobileMenuOpen(false)
   }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Header */}
       <header
         className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
           isScrolled ? "border-b border-border bg-background/90 shadow-sm backdrop-blur-xl" : "bg-background/70 backdrop-blur-sm"
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2" aria-label="Leadify">
+          <Link href="/" className="flex items-center gap-2" aria-label="Moratta">
             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-foreground">
-              <span className="text-lg font-bold text-background">L</span>
+              <span className="text-lg font-bold text-background">M</span>
             </div>
-            <span className="text-xl font-bold">Leadify</span>
+            <span className="text-xl font-bold">Moratta</span>
           </Link>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Navegação principal">
@@ -185,32 +208,29 @@ export default function HomePage() {
             <Button className="hidden bg-foreground text-background hover:bg-foreground/90 sm:inline-flex" asChild>
               <Link href="/cadastrar">Começar grátis</Link>
             </Button>
-
             <button
               type="button"
               className="flex h-10 w-10 items-center justify-center rounded-md border border-border md:hidden"
-              onClick={() => setIsMobileMenuOpen((isOpen) => !isOpen)}
+              onClick={() => setIsMobileMenuOpen((o) => !o)}
               aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
-              aria-expanded={isMobileMenuOpen}
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
 
+        {/* Mobile menu */}
         <div
           className={`absolute left-0 right-0 top-16 border-b border-border bg-background/95 backdrop-blur-xl transition-all duration-300 md:hidden ${
             isMobileMenuOpen ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none -translate-y-4 opacity-0"
           }`}
         >
-          <nav className="flex flex-col gap-2 p-4" aria-label="Navegação mobile">
+          <nav className="flex flex-col gap-2 p-4">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`rounded-md px-4 py-3 text-left text-sm transition-colors ${
-                  activeSection === item.id ? "bg-primary/30 font-medium text-foreground" : "text-muted-foreground hover:bg-secondary"
-                }`}
+                className="rounded-md px-4 py-3 text-left text-sm text-muted-foreground hover:bg-secondary"
               >
                 {item.label}
               </button>
@@ -219,7 +239,7 @@ export default function HomePage() {
               <Button variant="outline" className="w-full" asChild>
                 <Link href="/login">Entrar</Link>
               </Button>
-              <Button className="w-full bg-foreground text-background hover:bg-foreground/90" asChild>
+              <Button className="w-full bg-foreground text-background" asChild>
                 <Link href="/cadastrar">Começar grátis</Link>
               </Button>
             </div>
@@ -228,123 +248,105 @@ export default function HomePage() {
       </header>
 
       <main>
-        <section className="relative overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f5f5f5_100%)] pt-24">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-16 sm:px-6 sm:pb-20 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:pb-24 lg:pt-10">
-            <div>
+        {/* Hero */}
+        <section className="relative overflow-hidden bg-[linear-gradient(180deg,#ffffff_0%,#f5f5f5_100%)] pt-28 pb-20 sm:pt-36 sm:pb-28">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="mx-auto max-w-4xl text-center">
               <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-3 py-2 text-sm shadow-sm">
                 <Sparkles className="h-4 w-4 text-foreground" />
-                CRM com IA para vender melhor pelo WhatsApp
+                Planejamento residencial com inteligência artificial
               </div>
               <h1 className="mt-6 text-balance text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-                Organize leads, responda mais rápido e feche mais vendas.
+                Sua casa começa aqui.
+                <br />
+                <span className="text-muted-foreground">A IA cuida do resto.</span>
               </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
-                O Leadify reúne CRM, funil de vendas e assistente de IA em uma rotina simples para pequenos negócios que atendem pelo WhatsApp e Instagram.
+              <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground">
+                Descreva o que precisa — terreno, quartos, estilo — e receba uma planta conceitual editável, visualização 3D e estimativa de custo em minutos. Sem precisar de software técnico.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
                 <Button size="lg" className="bg-foreground text-background hover:bg-foreground/90" asChild>
                   <Link href="/cadastrar">
-                    Começar grátis
+                    Criar meu projeto grátis
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button size="lg" variant="outline" onClick={() => scrollToSection("demo")}>
-                  Ver demonstração
+                <Button size="lg" variant="outline" onClick={() => scrollToSection("como-funciona")}>
+                  Ver como funciona
                 </Button>
-              </div>
-              <div className="mt-8 grid max-w-xl grid-cols-3 gap-3">
-                {stats.map((stat) => (
-                  <div key={stat.label} className="border-l border-border pl-3">
-                    <p className="text-xl font-bold">{stat.value}</p>
-                    <p className="mt-1 text-xs leading-4 text-muted-foreground">{stat.label}</p>
-                  </div>
-                ))}
               </div>
             </div>
 
-            <div id="demo" className="scroll-mt-24 rounded-lg border border-border bg-card p-3 shadow-2xl">
-              <div className="overflow-hidden rounded-md border border-border bg-background">
-                <div className="flex items-center justify-between border-b border-border bg-card px-4 py-3">
-                  <div className="flex items-center gap-2">
-                    <span className="h-3 w-3 rounded-full bg-[#ef4444]" />
-                    <span className="h-3 w-3 rounded-full bg-[#f59e0b]" />
-                    <span className="h-3 w-3 rounded-full bg-[#22c55e]" />
-                  </div>
-                  <div className="rounded-full bg-primary/50 px-3 py-1 text-xs font-medium">Pipeline de hoje</div>
+            {/* Stats */}
+            <div className="mx-auto mt-16 grid max-w-xl grid-cols-3 gap-4">
+              {stats.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <p className="text-2xl font-bold sm:text-3xl">{stat.value}</p>
+                  <p className="mt-1 text-xs text-muted-foreground sm:text-sm">{stat.label}</p>
                 </div>
+              ))}
+            </div>
 
-                <div className="grid gap-4 p-4 lg:grid-cols-[1.2fr_0.8fr]">
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-3 gap-3">
-                      {[
-                        ["Novos leads", "34", "+18%"],
-                        ["Conversões", "12", "+7%"],
-                        ["Tempo médio", "4 min", "-32%"],
-                      ].map(([label, value, change]) => (
-                        <div key={label} className="rounded-md border border-border bg-card p-3">
-                          <p className="text-xs text-muted-foreground">{label}</p>
-                          <div className="mt-2 flex items-end justify-between gap-2">
-                            <span className="text-2xl font-bold">{value}</span>
-                            <span className="text-xs font-medium text-foreground">{change}</span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="grid gap-3 sm:grid-cols-3">
-                      {["Novo contato", "Em negociação", "Fechamento"].map((column, columnIndex) => (
-                        <div key={column} className="rounded-md border border-border bg-secondary/50 p-3">
-                          <p className="text-xs font-semibold">{column}</p>
-                          <div className="mt-3 space-y-2">
-                            {[0, 1, 2].map((item) => (
-                              <div key={item} className="rounded-md border border-border bg-card p-3 shadow-sm">
-                                <div className="flex items-center justify-between gap-2">
-                                  <span className="h-2 w-16 rounded-full bg-foreground/20" />
-                                  <span className="h-2 w-2 rounded-full bg-primary" />
-                                </div>
-                                <div className="mt-3 h-2 rounded-full bg-muted" />
-                                <div className="mt-2 h-2 w-2/3 rounded-full bg-muted" />
-                                {columnIndex === 1 && item === 0 && (
-                                  <div className="mt-3 inline-flex items-center gap-1 rounded-full bg-primary/50 px-2 py-1 text-[10px] font-medium">
-                                    <Brain className="h-3 w-3" />
-                                    IA sugeriu resposta
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
+            {/* Hero visual mockup */}
+            <div className="mx-auto mt-16 max-w-5xl rounded-xl border border-border bg-card p-3 shadow-2xl">
+              <div className="overflow-hidden rounded-lg border border-border bg-background">
+                <div className="flex items-center gap-2 border-b border-border bg-card px-4 py-3">
+                  <span className="h-3 w-3 rounded-full bg-[#ef4444]" />
+                  <span className="h-3 w-3 rounded-full bg-[#f59e0b]" />
+                  <span className="h-3 w-3 rounded-full bg-[#22c55e]" />
+                  <span className="ml-4 text-xs text-muted-foreground">moratta.app — Meu Projeto</span>
+                </div>
+                <div className="grid gap-4 p-6 lg:grid-cols-[1.4fr_0.6fr]">
+                  {/* Floor plan mockup */}
+                  <div className="relative aspect-[4/3] rounded-md border border-border bg-muted/30 p-4">
+                    <div className="absolute inset-4 grid grid-cols-3 grid-rows-3 gap-1">
+                      <div className="col-span-2 rounded bg-blue-100/60 border border-blue-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-blue-700 font-medium">Sala 20.0m²</span>
+                      </div>
+                      <div className="rounded bg-orange-100/60 border border-orange-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-orange-700 font-medium">Cozinha</span>
+                      </div>
+                      <div className="rounded bg-gray-100/60 border border-gray-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-gray-600 font-medium">Corredor</span>
+                      </div>
+                      <div className="rounded bg-purple-100/60 border border-purple-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-purple-700 font-medium">Quarto 1</span>
+                      </div>
+                      <div className="rounded bg-purple-100/60 border border-purple-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-purple-700 font-medium">Quarto 2</span>
+                      </div>
+                      <div className="rounded bg-cyan-100/60 border border-cyan-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-cyan-700 font-medium">Banheiro</span>
+                      </div>
+                      <div className="rounded bg-green-100/60 border border-green-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-green-700 font-medium">Garagem</span>
+                      </div>
+                      <div className="rounded bg-amber-100/60 border border-amber-200/80 flex items-center justify-center">
+                        <span className="text-[10px] sm:text-xs text-amber-700 font-medium">Serviço</span>
+                      </div>
                     </div>
                   </div>
-
-                  <div className="space-y-4">
-                    <div className="rounded-md border border-border bg-foreground p-4 text-background">
-                      <div className="flex items-center gap-2">
-                        <Brain className="h-5 w-5 text-primary" />
-                        <p className="font-semibold">Assistente Leadify</p>
-                      </div>
-                      <p className="mt-3 text-sm leading-6 text-background/75">
-                        Cliente pediu valores. Sugestão: responder com o plano ideal, destacar prazo de implantação e chamar para uma demonstração rápida.
-                      </p>
-                      <Button className="mt-4 bg-primary text-primary-foreground hover:bg-primary/90" size="sm">
-                        Usar resposta
-                      </Button>
-                    </div>
-
+                  {/* Side panel mockup */}
+                  <div className="space-y-3">
                     <div className="rounded-md border border-border bg-card p-4">
-                      <div className="flex items-center justify-between">
-                        <p className="font-semibold">Próximas ações</p>
-                        <Clock3 className="h-4 w-4 text-muted-foreground" />
+                      <p className="text-xs font-medium text-muted-foreground">Custo Estimado</p>
+                      <p className="mt-1 text-2xl font-bold">R$ 285.000</p>
+                      <p className="text-xs text-muted-foreground">Padrão médio • 95m²</p>
+                    </div>
+                    <div className="rounded-md border border-border bg-card p-4">
+                      <p className="text-xs font-medium text-muted-foreground">Cronograma</p>
+                      <div className="mt-2 space-y-2">
+                        <div className="flex justify-between text-xs"><span>Fundação</span><span className="text-muted-foreground">3 sem</span></div>
+                        <div className="flex justify-between text-xs"><span>Estrutura</span><span className="text-muted-foreground">6 sem</span></div>
+                        <div className="flex justify-between text-xs"><span>Acabamento</span><span className="text-muted-foreground">5 sem</span></div>
                       </div>
-                      <div className="mt-4 space-y-3">
-                        {["Retornar orçamento", "Enviar proposta", "Confirmar reunião"].map((task) => (
-                          <div key={task} className="flex items-center gap-3">
-                            <Check className="h-4 w-4 rounded-full bg-primary p-0.5 text-primary-foreground" />
-                            <span className="text-sm">{task}</span>
-                          </div>
-                        ))}
+                    </div>
+                    <div className="rounded-md border border-foreground bg-foreground p-4 text-background">
+                      <div className="flex items-center gap-2">
+                        <Home className="h-4 w-4" />
+                        <span className="text-xs font-medium">3D disponível</span>
                       </div>
+                      <p className="mt-2 text-xs text-background/70">Clique para navegar pelo interior da casa em primeira pessoa.</p>
                     </div>
                   </div>
                 </div>
@@ -353,21 +355,47 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="recursos" className="scroll-mt-20 bg-card py-20 sm:py-24">
+        {/* How it works */}
+        <section id="como-funciona" className="scroll-mt-20 bg-card py-20 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6">
+            <div className="mx-auto max-w-2xl text-center">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Como funciona</p>
+              <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
+                3 passos para visualizar sua casa
+              </h2>
+            </div>
+
+            <div className="mx-auto mt-14 grid max-w-4xl gap-8 lg:grid-cols-3">
+              {steps.map((step) => (
+                <div key={step.number} className="relative rounded-lg border border-border bg-background p-6">
+                  <span className="text-4xl font-bold text-muted-foreground/20">{step.number}</span>
+                  <h3 className="mt-2 text-lg font-semibold">{step.title}</h3>
+                  <p className="mt-2 leading-7 text-muted-foreground">{step.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section id="recursos" className="scroll-mt-20 py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Recursos</p>
               <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-                Tudo o que você precisa para transformar conversas em vendas.
+                Tudo para planejar sem complicação
               </h2>
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
-                Menos abas abertas, menos informação perdida e mais clareza para acompanhar cada oportunidade.
+                Da geração automática à estimativa de materiais — ferramentas que simplificam cada etapa do planejamento.
               </p>
             </div>
 
-            <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {features.map((feature) => (
-                <div key={feature.title} className="rounded-lg border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <div
+                  key={feature.title}
+                  className="rounded-lg border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                >
                   <div className="flex h-11 w-11 items-center justify-center rounded-md bg-primary/40">
                     <feature.icon className="h-5 w-5" />
                   </div>
@@ -379,35 +407,16 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* <section className="border-y border-border py-16">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-3">
-            {[
-              ["1", "Capture", "Receba leads vindos dos seus canais e registre os dados mais importantes desde o primeiro contato."],
-              ["2", "Atenda", "Use histórico, tarefas e IA para responder com rapidez sem perder o tom humano da sua marca."],
-              ["3", "Venda", "Acompanhe o funil, priorize oportunidades quentes e saiba exatamente onde agir para converter mais."],
-            ].map(([step, title, description]) => (
-              <div key={step} className="flex gap-4">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-foreground text-sm font-bold text-background">
-                  {step}
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold">{title}</h3>
-                  <p className="mt-2 leading-7 text-muted-foreground">{description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section> */}
-
-        <section id="precos" className="scroll-mt-20 py-20 sm:py-24">
+        {/* Pricing */}
+        <section id="planos" className="scroll-mt-20 bg-card py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="mx-auto max-w-2xl text-center">
               <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Planos</p>
               <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-                Comece de graça e evolua quando fizer sentido.
+                Comece de graça. Evolua quando precisar.
               </h2>
               <p className="mt-4 text-lg leading-8 text-muted-foreground">
-                Planos simples para sair da planilha sem travar seu caixa.
+                Sem cartão de crédito para começar. Cancele quando quiser.
               </p>
             </div>
 
@@ -415,8 +424,10 @@ export default function HomePage() {
               {plans.map((plan) => (
                 <div
                   key={plan.name}
-                  className={`rounded-lg border p-6 transition-all duration-300 hover:-translate-y-1 sm:p-8 ${
-                    plan.highlighted ? "border-foreground bg-foreground text-background shadow-xl" : "border-border bg-card hover:shadow-lg"
+                  className={`rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 sm:p-8 ${
+                    plan.highlighted
+                      ? "border-foreground bg-foreground text-background shadow-xl scale-[1.02]"
+                      : "border-border bg-background hover:shadow-lg"
                   }`}
                 >
                   {plan.highlighted && (
@@ -425,10 +436,16 @@ export default function HomePage() {
                     </div>
                   )}
                   <h3 className="text-xl font-semibold">{plan.name}</h3>
-                  <p className={`mt-2 text-sm ${plan.highlighted ? "text-background/70" : "text-muted-foreground"}`}>{plan.description}</p>
+                  <p className={`mt-2 text-sm ${plan.highlighted ? "text-background/70" : "text-muted-foreground"}`}>
+                    {plan.description}
+                  </p>
                   <div className="mt-6">
                     <span className="text-4xl font-bold">{plan.price}</span>
-                    {plan.price !== "R$ 0" && <span className={plan.highlighted ? "text-background/70" : "text-muted-foreground"}>/mês</span>}
+                    {plan.period && (
+                      <span className={plan.highlighted ? "text-background/70" : "text-muted-foreground"}>
+                        {plan.period}
+                      </span>
+                    )}
                   </div>
                   <ul className="mt-7 space-y-3">
                     {plan.features.map((feature) => (
@@ -440,7 +457,9 @@ export default function HomePage() {
                   </ul>
                   <Button
                     className={`mt-8 w-full ${
-                      plan.highlighted ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-foreground text-background hover:bg-foreground/90"
+                      plan.highlighted
+                        ? "bg-primary text-primary-foreground hover:bg-primary/90"
+                        : "bg-foreground text-background hover:bg-foreground/90"
                     }`}
                     asChild
                   >
@@ -452,40 +471,15 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="sobre" className="scroll-mt-20 bg-card py-20 sm:py-24">
-          <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground">Sobre</p>
-              <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-                Feito para negócios que vendem na conversa, não em formulários frios.
-              </h2>
-              <p className="mt-4 text-lg leading-8 text-muted-foreground">
-                O Leadify nasceu para simplificar a rotina de lojas, clínicas, prestadores de serviço e equipes comerciais que precisam responder rápido, lembrar de cada cliente e manter o funil em movimento.
-              </p>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                ["Atendimento mais rápido", "Sugestões de resposta ajudam sua equipe a reduzir o tempo entre uma pergunta e uma proposta."],
-                ["Histórico no lugar certo", "Cada lead carrega contexto, próximos passos e conversas anteriores para ninguém começar do zero."],
-                ["Gestão sem complicação", "Uma visão clara do funil mostra gargalos e oportunidades sem depender de planilhas soltas."],
-                ["Crescimento previsível", "Relatórios ajudam você a entender o que entra, o que converte e onde a operação pode melhorar."],
-              ].map(([title, description]) => (
-                <div key={title} className="rounded-lg border border-border bg-background p-6">
-                  <h3 className="font-semibold">{title}</h3>
-                  <p className="mt-2 leading-7 text-muted-foreground">{description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
+        {/* Final CTA */}
         <section className="bg-foreground py-16 text-background sm:py-20">
-          <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between">
+          <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 text-center sm:px-6">
             <div className="max-w-2xl">
-              <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">Pronto para vender com mais clareza?</h2>
+              <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
+                Pronto para projetar com inteligência?
+              </h2>
               <p className="mt-4 text-lg leading-8 text-background/75">
-                Crie sua conta, organize seus primeiros leads e teste o assistente de IA sem cartão de crédito.
+                Crie sua conta e gere sua primeira planta conceitual em poucos minutos — sem instalar nada, sem conhecimento técnico.
               </p>
             </div>
             <div className="flex flex-col gap-3 sm:flex-row">
@@ -495,7 +489,12 @@ export default function HomePage() {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-background/25 bg-transparent text-background hover:bg-background/10" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-background/25 bg-transparent text-background hover:bg-background/10"
+                asChild
+              >
                 <Link href="/login">Já tenho conta</Link>
               </Button>
             </div>
@@ -503,13 +502,14 @@ export default function HomePage() {
         </section>
       </main>
 
+      {/* Footer */}
       <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-5 px-4 sm:px-6 md:flex-row">
-          <Link href="/" className="flex items-center gap-2" aria-label="Leadify">
+          <Link href="/" className="flex items-center gap-2" aria-label="Moratta">
             <div className="flex h-8 w-8 items-center justify-center rounded-md bg-foreground">
-              <span className="text-sm font-bold text-background">L</span>
+              <span className="text-sm font-bold text-background">M</span>
             </div>
-            <span className="font-semibold">Leadify</span>
+            <span className="font-semibold">Moratta</span>
           </Link>
           <nav className="flex flex-wrap items-center justify-center gap-6" aria-label="Navegação do rodapé">
             {navItems.map((item) => (
@@ -522,7 +522,7 @@ export default function HomePage() {
               </button>
             ))}
           </nav>
-          <p className="text-sm text-muted-foreground">© 2026 Leadify. Todos os direitos reservados.</p>
+          <p className="text-sm text-muted-foreground">© 2026 Moratta. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>

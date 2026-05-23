@@ -4,31 +4,33 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import {
-  LayoutDashboard,
-  Users,
-  Kanban,
-  MessageSquare,
-  Brain,
+  Home,
+  Plus,
+  UserCircle,
+  BarChart3,
   Settings,
-  HelpCircle,
   LogOut,
   ChevronLeft,
   ChevronRight,
   X,
+  Heart,
+  FolderOpen,
+  User,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const navigation = [
-  { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { name: "Leads", href: "/dashboard/leads", icon: Users },
-  { name: "Kanban", href: "/dashboard/kanban", icon: Kanban },
-  { name: "Conversas", href: "/dashboard/conversas", icon: MessageSquare },
-  { name: "IA Assistente", href: "/dashboard/ia", icon: Brain },
+  { name: "Projetos", href: "/dashboard/moratta", icon: Home },
+  { name: "Novo Projeto", href: "/dashboard/moratta/novo", icon: Plus },
+  { name: "Clientes", href: "/dashboard/moratta/clientes", icon: UserCircle },
+  { name: "Métricas", href: "/dashboard/moratta/metricas", icon: BarChart3 },
+  { name: "Favoritos", href: "/dashboard/favoritos", icon: Heart },
+  { name: "Biblioteca", href: "/dashboard/biblioteca", icon: FolderOpen },
 ]
 
 const secondaryNavigation = [
+  { name: "Perfil", href: "/dashboard/perfil", icon: User },
   { name: "Configurações", href: "/dashboard/configuracoes", icon: Settings },
-  { name: "Ajuda", href: "/dashboard/ajuda", icon: HelpCircle },
 ]
 
 interface SidebarProps {
@@ -75,16 +77,16 @@ export function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobileOpen }: 
         {/* Logo */}
         <div className="flex h-16 items-center justify-between px-4">
           {!collapsed && (
-            <Link href="/dashboard" className="flex items-center gap-2" onClick={handleLinkClick}>
+            <Link href="/dashboard/moratta" className="flex items-center gap-2" onClick={handleLinkClick}>
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-                <span className="text-lg font-bold text-primary-foreground">L</span>
+                <span className="text-lg font-bold text-primary-foreground">M</span>
               </div>
-              <span className="text-xl font-bold">Leadify</span>
+              <span className="text-xl font-bold">Moratta</span>
             </Link>
           )}
           {collapsed && (
             <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-              <span className="text-lg font-bold text-primary-foreground">L</span>
+              <span className="text-lg font-bold text-primary-foreground">M</span>
             </div>
           )}
           
@@ -110,7 +112,7 @@ export function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobileOpen }: 
         {/* Navigation */}
         <nav className="mt-8 flex-1 space-y-1 px-3">
           {navigation.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = pathname === item.href || (item.href !== "/dashboard/moratta" && pathname.startsWith(item.href))
             return (
               <Link
                 key={item.name}
@@ -160,21 +162,6 @@ export function Sidebar({ collapsed, setCollapsed, mobileOpen, setMobileOpen }: 
             {!collapsed && <span>Sair</span>}
           </button>
         </div>
-
-        {/* User */}
-        {!collapsed && (
-          <div className="border-t border-sidebar-border p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-sidebar-accent">
-                <span className="text-sm font-medium">VS</span>
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium">Victor Silva</p>
-                <p className="text-xs text-sidebar-foreground/60">Admin</p>
-              </div>
-            </div>
-          </div>
-        )}
       </aside>
     </>
   )

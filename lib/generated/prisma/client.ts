@@ -31,8 +31,8 @@ export * from "./enums"
  * const prisma = new PrismaClient({
  *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
  * })
- * // Fetch zero or more Companies
- * const companies = await prisma.company.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -42,67 +42,32 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model Company
- * 
- */
-export type Company = Prisma.CompanyModel
-/**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
 /**
- * Model LeadStatus
+ * Model SystemSettings
  * 
  */
-export type LeadStatus = Prisma.LeadStatusModel
+export type SystemSettings = Prisma.SystemSettingsModel
 /**
- * Model Lead
+ * Model MorattaProfile
  * 
  */
-export type Lead = Prisma.LeadModel
+export type MorattaProfile = Prisma.MorattaProfileModel
 /**
- * Model Conversation
+ * Model MorattaClient
  * 
  */
-export type Conversation = Prisma.ConversationModel
+export type MorattaClient = Prisma.MorattaClientModel
 /**
- * Model Message
+ * Model MorattaProject
  * 
  */
-export type Message = Prisma.MessageModel
+export type MorattaProject = Prisma.MorattaProjectModel
 /**
- * Model KnowledgeBase
+ * Model MorattaVariation
  * 
  */
-export type KnowledgeBase = Prisma.KnowledgeBaseModel
-/**
- * Model Plan
- * 
- */
-export type Plan = Prisma.PlanModel
-/**
- * Model Subscription
- * 
- */
-export type Subscription = Prisma.SubscriptionModel
-/**
- * Model LeadHistory
- * 
- */
-export type LeadHistory = Prisma.LeadHistoryModel
-/**
- * Model AiLog
- * 
- */
-export type AiLog = Prisma.AiLogModel
-/**
- * Model WhatsAppConfig
- * 
- */
-export type WhatsAppConfig = Prisma.WhatsAppConfigModel
-/**
- * Model WhatsAppMessageDedup
- * 
- */
-export type WhatsAppMessageDedup = Prisma.WhatsAppMessageDedupModel
+export type MorattaVariation = Prisma.MorattaVariationModel

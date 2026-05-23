@@ -18,67 +18,32 @@ export { Prisma }
 export * as $Enums from './enums'
 export * from './enums';
 /**
- * Model Company
- * 
- */
-export type Company = Prisma.CompanyModel
-/**
  * Model User
  * 
  */
 export type User = Prisma.UserModel
 /**
- * Model LeadStatus
+ * Model SystemSettings
  * 
  */
-export type LeadStatus = Prisma.LeadStatusModel
+export type SystemSettings = Prisma.SystemSettingsModel
 /**
- * Model Lead
+ * Model MorattaProfile
  * 
  */
-export type Lead = Prisma.LeadModel
+export type MorattaProfile = Prisma.MorattaProfileModel
 /**
- * Model Conversation
+ * Model MorattaClient
  * 
  */
-export type Conversation = Prisma.ConversationModel
+export type MorattaClient = Prisma.MorattaClientModel
 /**
- * Model Message
+ * Model MorattaProject
  * 
  */
-export type Message = Prisma.MessageModel
+export type MorattaProject = Prisma.MorattaProjectModel
 /**
- * Model KnowledgeBase
+ * Model MorattaVariation
  * 
  */
-export type KnowledgeBase = Prisma.KnowledgeBaseModel
-/**
- * Model Plan
- * 
- */
-export type Plan = Prisma.PlanModel
-/**
- * Model Subscription
- * 
- */
-export type Subscription = Prisma.SubscriptionModel
-/**
- * Model LeadHistory
- * 
- */
-export type LeadHistory = Prisma.LeadHistoryModel
-/**
- * Model AiLog
- * 
- */
-export type AiLog = Prisma.AiLogModel
-/**
- * Model WhatsAppConfig
- * 
- */
-export type WhatsAppConfig = Prisma.WhatsAppConfigModel
-/**
- * Model WhatsAppMessageDedup
- * 
- */
-export type WhatsAppMessageDedup = Prisma.WhatsAppMessageDedupModel
+export type MorattaVariation = Prisma.MorattaVariationModel
